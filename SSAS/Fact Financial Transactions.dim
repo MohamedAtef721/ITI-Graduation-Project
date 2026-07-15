@@ -1,0 +1,362 @@
+﻿<Dimension xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="b997c2a1-659d-4c9c-bb60-4acda4a83065" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ID>Fact Financial Transactions</ID>
+  <Name>Fact Financial Transactions</Name>
+  <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+  <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+  <Annotations>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramLayout</Name>
+      <Value>
+        <dds xmlns="">
+          <diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="MSDDS.Rectilinear" defaultlineroute="MSDDS.Rectilinear" version="7" nextobject="3" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="-1049" scrolltop="-2742" gridx="150" gridy="150" marginx="5000" marginy="5000" zoom="100" x="6879" y="12742" backcolor="2039583" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="0" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}">
+            <font>
+              <ddsxmlobjectstreamwrapper binary="010000009001b0300100065461686f6d61" />
+            </font>
+            <mouseicon>
+              <ddsxmlobjectstreamwrapper binary="6c74000000000000" />
+            </mouseicon>
+          </diagram>
+          <layoutmanager>
+            <ddsxmlobj />
+          </layoutmanager>
+          <ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge" tooltip="FactFinancialTransactions" left="20" top="0" logicalid="2" controlid="1" masterid="0" hint1="0" hint2="0" width="4360" height="5000" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0">
+            <control>
+              <ddsxmlobjectstreaminitwrapper binary="000e00000811000088130000" />
+            </control>
+            <layoutobject>
+              <ddsxmlobj>
+                <property name="LogicalObject" value="dbo_FactFinancialTransactions" vartype="8" />
+              </ddsxmlobj>
+            </layoutobject>
+            <shape groupshapeid="0" groupnode="0" />
+          </ddscontrol>
+        </dds>
+      </Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowFriendlyNames</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowRelationshipNames</Name>
+      <Value>false</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:UseDiagramDefaultLayout</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortLeft</Name>
+      <Value>-1049</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortTop</Name>
+      <Value>-2742</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingLeft</Name>
+      <Value>20</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingTop</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramZoom</Name>
+      <Value>100</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ARDiagramLayout</Name>
+      <Value>
+        <DiagramLayout ZoomPercent="100" ViewPortX="0" ViewPortY="0" xmlns="">
+          <Shapes NodeWidth="229">
+            <Shape Id="Financial Transaction Key" Expanded="true">
+              <Attributes>
+                <Attribute Id="Financial Transaction Key" />
+                <Attribute Id="Customer Key" />
+                <Attribute Id="Date Key" />
+                <Attribute Id="Payment Method Key" />
+                <Attribute Id="Supplier Key" />
+                <Attribute Id="Transaction Source" />
+                <Attribute Id="Transaction Type Key" />
+              </Attributes>
+              <Position x="20" y="20" />
+            </Shape>
+          </Shapes>
+        </DiagramLayout>
+      </Value>
+    </Annotation>
+  </Annotations>
+  <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
+  <State>Unprocessed</State>
+  <Source xsi:type="DataSourceViewBinding" dwd:design-time-name="87f1d468-257b-4ecf-a74c-50c32c83a28f">
+    <DataSourceViewID>Financial_dsv</DataSourceViewID>
+  </Source>
+  <ErrorConfiguration dwd:design-time-name="3960d39d-3019-4074-a440-74ec9a187257">
+    <KeyNotFound>ReportAndStop</KeyNotFound>
+    <KeyDuplicate>ReportAndStop</KeyDuplicate>
+    <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+  </ErrorConfiguration>
+  <CurrentStorageMode>Molap</CurrentStorageMode>
+  <Attributes>
+    <Attribute dwd:design-time-name="e442782e-f3b6-46a1-bbfe-2a1243112183">
+      <ID>Financial Transaction Key</ID>
+      <Name>Financial Transaction Key</Name>
+      <Usage>Key</Usage>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="5c2ed356-e5e1-4d2b-a074-6985f8312840">
+          <DataType>BigInt</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="5773548c-b8e0-4d01-aef0-b3b48283dd9f">
+            <TableID>dbo_FactFinancialTransactions</TableID>
+            <ColumnID>FinancialTransactionKey</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="577e141c-88fd-4ff5-a11d-5fdbb6d5a1a5">
+          <AttributeID>Payment Method Key</AttributeID>
+          <Name>Payment Method Key</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="3ab8d2c2-dbc1-48bd-bc37-5289cc565cd8">
+          <AttributeID>Date Key</AttributeID>
+          <Name>Date Key</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="f5491394-7edf-4ccc-9a86-5a011d3a8763">
+          <AttributeID>Customer Key</AttributeID>
+          <Name>Customer Key</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="87d3f16a-b28e-4b42-83cc-e1ce5ff4152b">
+          <AttributeID>Transaction Type Key</AttributeID>
+          <Name>Transaction Type Key</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="4c4fd89e-a3ff-4c2c-ab61-fd2b03b32fff">
+          <AttributeID>Supplier Key</AttributeID>
+          <Name>Supplier Key</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="d2e12f97-4a54-4ae8-a9e8-f163bf110c21">
+          <AttributeID>Transaction Source</AttributeID>
+          <Name>Transaction Source</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="69510606-0360-4420-9d30-390dbe9974f5">
+          <AttributeID>Invoice ID</AttributeID>
+          <Name>Invoice ID</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="2f169d81-2910-4289-ae47-684344c0316d">
+          <AttributeID>Purchase Order ID</AttributeID>
+          <Name>Purchase Order ID</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="c5e1fc44-715a-40a8-9b0a-7f4d894ee233">
+          <AttributeID>Net Amount</AttributeID>
+          <Name>Net Amount</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="d58d8cd8-ea53-4c1e-b269-a3552fde9c1d">
+          <AttributeID>Tax Amount</AttributeID>
+          <Name>Tax Amount</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="8fb59796-7646-41b1-9b3c-f8e8aa68c763">
+          <AttributeID>Transaction Amount</AttributeID>
+          <Name>Transaction Amount</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="edaf80bf-151d-4c20-b868-c20ba8ac74ac">
+          <AttributeID>Remaining Balance</AttributeID>
+          <Name>Remaining Balance</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="91d358a7-e158-4cbd-9a26-2a91d469524b">
+      <ID>Payment Method Key</ID>
+      <Name>Payment Method Key</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="4314d879-65d1-4fc5-b098-fa2906f0578d">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="267d8da4-1fe1-4364-9c84-371efa4efa70">
+            <TableID>dbo_FactFinancialTransactions</TableID>
+            <ColumnID>PaymentMethodKey</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="af0ada85-e98f-4b4d-8b79-434fce2ca25f">
+      <ID>Date Key</ID>
+      <Name>Date Key</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="51e4017a-46cc-4484-ac0f-f3174cdbcaf1">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="39db1909-8617-4b80-85c9-fdd52dda7cae">
+            <TableID>dbo_FactFinancialTransactions</TableID>
+            <ColumnID>DateKey</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="6aee7edf-9913-4244-a72f-9322bb6f86f5">
+      <ID>Customer Key</ID>
+      <Name>Customer Key</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="12bcd707-8a2f-493a-939c-4af062e0cefc">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="d01bd282-e3db-4aa5-bcf3-3cba49d26080">
+            <TableID>dbo_FactFinancialTransactions</TableID>
+            <ColumnID>CustomerKey</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="aeaed341-4cc2-4a9e-9a45-f89e5269f0ad">
+      <ID>Transaction Type Key</ID>
+      <Name>Transaction Type Key</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="2e66465b-dfe2-4ad0-96f6-479a5fc1c183">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="48ca01a4-fea3-4d5c-8fbe-5932692ef132">
+            <TableID>dbo_FactFinancialTransactions</TableID>
+            <ColumnID>TransactionTypeKey</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="0c389d12-190c-40a7-ba81-8b78445d3695">
+      <ID>Supplier Key</ID>
+      <Name>Supplier Key</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="c769fa32-e2ef-42b9-a5bb-06eb81805318">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="2085e646-da5c-43c0-a933-dc1cd31e2b83">
+            <TableID>dbo_FactFinancialTransactions</TableID>
+            <ColumnID>SupplierKey</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <OrderBy>Key</OrderBy>
+      <AttributeHierarchyVisible>false</AttributeHierarchyVisible>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="47ce44a3-2e02-41e2-b1b0-a7b01a80fe5e">
+      <ID>Transaction Source</ID>
+      <Name>Transaction Source</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="34f7ccc1-0df4-4e9a-ac49-fdf7e9d59bc8">
+          <DataType>WChar</DataType>
+          <DataSize>20</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="0e0774d3-e731-4731-8aee-d1eab93b0649">
+            <TableID>dbo_FactFinancialTransactions</TableID>
+            <ColumnID>TransactionSource</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="35cdd29f-d02c-4ca6-b130-cda9fc2c4031">
+      <ID>Invoice ID</ID>
+      <Name>Invoice ID</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="8cc783ed-31be-4063-bd28-658704d5844b">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="6b4f50c5-e2ac-42b3-82b3-e70155123a44">
+            <TableID>dbo_FactFinancialTransactions</TableID>
+            <ColumnID>InvoiceID</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="3b89fdeb-800f-49c1-b433-9a66e2704144">
+      <ID>Purchase Order ID</ID>
+      <Name>Purchase Order ID</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="ca64efb2-3eb3-416f-a5e2-261fd56db2fb">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="8ffe8590-f034-472e-9e8b-1e560a57d30e">
+            <TableID>dbo_FactFinancialTransactions</TableID>
+            <ColumnID>PurchaseOrderID</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="a18f595d-0823-4405-9848-afd7f9f9babe">
+      <ID>Net Amount</ID>
+      <Name>Net Amount</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="b287b85c-b725-4611-9030-1e04e24bece1">
+          <DataType>Double</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="c3f7805f-a6fa-4a37-a971-fb94b0f9588f">
+            <TableID>dbo_FactFinancialTransactions</TableID>
+            <ColumnID>NetAmount</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="8b5e1959-bd9d-4dee-84d1-67f6055fa6b2">
+      <ID>Tax Amount</ID>
+      <Name>Tax Amount</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="f8efb425-3e11-41cb-91a2-f877aed4773a">
+          <DataType>Double</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="4bcbf24a-b2a5-4aca-8eff-23623479bb33">
+            <TableID>dbo_FactFinancialTransactions</TableID>
+            <ColumnID>TaxAmount</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="e52486ba-4d13-4f27-9cd0-cc684eac5df2">
+      <ID>Transaction Amount</ID>
+      <Name>Transaction Amount</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="0e200d57-8085-4430-aeb1-0686683abc2f">
+          <DataType>Double</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="9ca6390e-2653-4484-b093-1ac22c12cad5">
+            <TableID>dbo_FactFinancialTransactions</TableID>
+            <ColumnID>TransactionAmount</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="75f03817-cb88-4df2-b4f2-4b76decf339c">
+      <ID>Remaining Balance</ID>
+      <Name>Remaining Balance</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="403decba-f700-4be1-beac-c1a03a25b171">
+          <DataType>Double</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="9c5be10f-ec7f-4f88-beeb-9bc5145909d0">
+            <TableID>dbo_FactFinancialTransactions</TableID>
+            <ColumnID>RemainingBalance</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+      <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
+    </Attribute>
+  </Attributes>
+  <ddl300:ProcessingState>Unprocessed</ddl300:ProcessingState>
+</Dimension>

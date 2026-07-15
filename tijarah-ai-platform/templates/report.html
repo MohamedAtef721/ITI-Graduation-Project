@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+  <div class="page-title">📋 Monthly Report</div>
+  <div class="page-sub">Automated executive summary with email delivery</div>
+</div>
+
+
+<!-- On-Demand Report -->
+<div class="card" style="margin-bottom:20px">
+  <div class="grid-3" style="gap:16px;align-items:flex-end">
+    <div class="form-group" style="margin:0">
+      <label class="form-label">Month</label>
+      <select class="form-control" id="month-sel">
+        <option value="1">January</option><option value="2">February</option>
+        <option value="3">March</option><option value="4">April</option>
+        <option value="5">May</option><option value="6">June</option>
+        <option value="7">July</option><option value="8">August</option>
+        <option value="9">September</option><option value="10">October</option>
+        <option value="11">November</option><option value="12">December</option>
+      </select>
+    </div>
+    <div class="form-group" style="margin:0">
+      <label class="form-label">Year</label>
+      <input class="form-control" type="number" id="year-inp" value="2016" min="2000" max="2100">
+    </div>
+    <button class="btn btn-primary btn-lg" onclick="generateReport()">📊 Generate Report</button>
+  </div>
+</div>
+
+<div class="loading-overlay" id="rep-loading">
+  <div class="spinner"></div>
+  <span>Building report & AI summary...</span>
+</div>
+
+<div id="rep-results" style="display:none">
+  <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:20px">
+    <div class="kpi-card blue"><span class="kpi-icon">💰</span><div class="kpi-label">Total Sales</div><div class="kpi-value" id="r-sales">—</div></div>
+    <div class="kpi-card green"><span class="kpi-icon">📈</span><div class="kpi-label">Total Profit</div><div class="kpi-value" id="r-profit">—</div></div>
+    <div class="kpi-card purple"><span class="kpi-icon">💹</span><div class="kpi-label">Profit Margin</div><div class="kpi-value" id="r-margin">—</div></div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-title">🤖 Key Business Insights</div>
+    <div id="r-narrative" style="font-size:14px;line-height:1.8;color:#94a3b8"></div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card"><div class="card-title">🏆 Top Products</div><div id="r-products"></div></div>
+    <div class="card"><div class="card-title">👥 Top Customers</div><div id="r-customers"></div></div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card"><div class="card-title">🚚 Top Suppliers</div><div id="r-suppliers"></div></div>
+    <div class="card"><div class="card-title">⚠️ Low Stock</div><div id="r-lowstock"></div></div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-title">📦 Overstock Alerts</div>
+    <div id="r-overstock"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📧 Send Report by Email</div>
+    <p style="font-size:13px;color:#94a3b8;margin-bottom:14px">Send the full report to configured recipients as a PDF attachment.</p>
+    <button class="btn btn-primary" onclick="sendEmail()">📤 Send Email</button>
+    <span id="email-status" style="margin-left:12px;font-size:13px"></span>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let reportData = null;
+
+// Pre-select current month
+const now = new Date();
+document.getElementById("month-sel").value = now.getMonth() + 1;
+document.getElementById("year-inp").value  = now.getFullYear();
+
+// ── Lightweight Markdown → HTML renderer for the AI narrative ─────────
+// (same approach as the AI Advisor page: **bold**, numbered/bullet lists)
+function escapeHtml(str) {
+  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+function formatAiText(text) {
+  if (!text) return "";
+  let safe = escapeHtml(text);
+
+  // Insert real line breaks BEFORE converting **bold** to <strong>, while
+  // the "**" markers are still literally present in the text — this is
+  // what lets us reliably detect "- **Label:**" as a new bullet, even
+  // when it isn't preceded by punctuation (the common AI output shape:
+  // "...up 3.2%. - **Top Products:** ..." or even "...** - **Next:** ...").
+  safe = safe
+    .replace(/\s-\s(?=\*\*)/g, "\n- ")              // "... - **Label:**" → new bullet line
+    .replace(/\s(\d+)\.\s(?=\*\*)/g, "\n$1. ")       // "... 1. **Label:**" → new numbered line
+    .replace(/([.:!?])\s+-\s+(?=\S)/g, "$1\n- ")     // fallback: dash after sentence punctuation
+    .replace(/([.:!?])\s+(\d+)\.\s+(?=\S)/g, "$1\n$2. "); // fallback: number after sentence punctuation
+
+  // Now safe to convert bold markers.
+  safe = safe.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+
+  const lines = safe.split("\n").map(l => l.trim()).filter(l => l.length);
+  let html = "";
+  let listType = null;
+  const closeList = () => { if (listType) { html += `</${listType}>`; listType = null; } };
+
+  lines.forEach(line => {
+    const numMatch    = line.match(/^(\d+)\.\s+(.*)/);
+    const bulletMatch = line.match(/^[-*]\s+(.*)/);
+    if (numMatch) {
+      if (listType !== "ol") { closeList(); html += `<ol style="margin:6px 0 6px 20px;padding:0">`; listType = "ol"; }
+      html += `<li style="margin-bottom:5px">${numMatch[2]}</li>`;
+    } else if (bulletMatch) {
+      if (listType !== "ul") { closeList(); html += `<ul style="margin:6px 0 6px 20px;padding:0">`; listType = "ul"; }
+      html += `<li style="margin-bottom:5px">${bulletMatch[1]}</li>`;
+    } else {
+      closeList();
+      html += `<p style="margin:6px 0">${line}</p>`;
+    }
+  });
+  closeList();
+  return html;
+}
+
+async function generateReport() {
+  const month = parseInt(document.getElementById("month-sel").value);
+  const year  = parseInt(document.getElementById("year-inp").value);
+  document.getElementById("rep-results").style.display = "none";
+  showLoading("rep-loading", true);
+
+  const res  = await fetch("/api/report/generate", {
+    method:"POST", headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({month,year}),
+  });
+  reportData = await res.json();
+  showLoading("rep-loading", false);
+
+  document.getElementById("r-sales").textContent   = fmtNum(reportData.total_sales,  "$");
+  document.getElementById("r-profit").textContent  = fmtNum(reportData.total_profit, "$");
+  document.getElementById("r-margin").textContent  = reportData.margin || "N/A";
+  document.getElementById("r-narrative").innerHTML = formatAiText(reportData.narrative || "");
+  buildTable(reportData.top_products,  document.getElementById("r-products"));
+  buildTable(reportData.top_customers, document.getElementById("r-customers"));
+  buildTable(reportData.top_suppliers, document.getElementById("r-suppliers"));
+  buildTable(reportData.low_stock,     document.getElementById("r-lowstock"));
+  buildTable(reportData.overstock,     document.getElementById("r-overstock"));
+  document.getElementById("rep-results").style.display = "block";
+}
+
+async function sendEmail() {
+  if (!reportData) { showToast("Generate a report first.", "error"); return; }
+  const statusEl = document.getElementById("email-status");
+  statusEl.textContent = "Sending...";
+
+  // Send the full report data — the server builds the PDF itself
+  // (utils/report_pdf.py) instead of receiving pre-built HTML.
+  const res  = await fetch("/api/report/send-email", {
+    method:"POST", headers:{"Content-Type":"application/json"},
+    body: JSON.stringify(reportData),
+  });
+  const d = await res.json();
+  if (d.ok) {
+    statusEl.style.color = "#10b981";
+    statusEl.textContent = "✅ Sent to " + d.sent_to.join(", ");
+    showToast("Report sent!", "success");
+  } else {
+    statusEl.style.color = "#ef4444";
+    statusEl.textContent = "❌ " + d.error;
+    showToast(d.error, "error");
+  }
+}
+
+// ── Scheduler functions ──────────────────────────────────────────────
+async function checkScheduler() {
+  const res  = await fetch("/api/scheduler/status");
+  const data = await res.json();
+  const el   = document.getElementById("sched-result");
+  if (!data.running) {
+    el.innerHTML = '<span style="color:#ef4444">⚠️ Scheduler not running</span>';
+    return;
+  }
+  const jobs = data.jobs || [];
+  if (!jobs.length) {
+    el.innerHTML = '<span style="color:#64748b">No jobs scheduled.</span>';
+    return;
+  }
+  el.innerHTML = jobs.map(j => {
+    const next = j.next_run
+      ? new Date(j.next_run).toLocaleString()
+      : "—";
+    return `<div style="padding:8px 12px;background:#1e2235;border-radius:8px;margin-top:6px">
+      <span style="color:#10b981;font-weight:600">✅ ${j.name}</span>
+      <span style="color:#64748b;margin-left:12px;font-size:12px">Next run: ${next}</span>
+    </div>`;
+  }).join("");
+}
+
+async function triggerNow() {
+  const month = parseInt(document.getElementById("month-sel").value);
+  const year  = parseInt(document.getElementById("year-inp").value);
+  showLoading("sched-loading", true);
+  document.getElementById("sched-result").innerHTML = "";
+
+  try {
+    const res  = await fetch("/api/scheduler/run-now", {
+      method : "POST",
+      headers: {"Content-Type":"application/json"},
+      body   : JSON.stringify({year, month}),
+    });
+    const data = await res.json();
+    const el   = document.getElementById("sched-result");
+
+    if (data.ok) {
+      el.innerHTML = `
+        <div class="alert alert-low" style="margin-top:8px">
+          <span style="font-size:20px">✅</span>
+          <div>
+            <div class="alert-title">Report executed successfully</div>
+            <div class="alert-body">${data.result}</div>
+          </div>
+        </div>`;
+      showToast("Monthly report sent!", "success");
+    } else {
+      el.innerHTML = `
+        <div class="alert alert-high" style="margin-top:8px">
+          <span style="font-size:20px">❌</span>
+          <div>
+            <div class="alert-title">Execution failed</div>
+            <div class="alert-body">${data.error}</div>
+          </div>
+        </div>`;
+      showToast("Failed: " + data.error, "error");
+    }
+  } catch(e) {
+    showToast("Error: " + e.message, "error");
+  } finally {
+    showLoading("sched-loading", false);
+  }
+}
+</script>
+{% endblock %}

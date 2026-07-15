@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RptDataSource xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="SmartInventory_DWH">
+  <ConnectionProperties>
+    <Extension>SQL</Extension>
+    <ConnectString>Data Source=DESKTOP-IEHRSES\MSSQLSERVER01;Initial Catalog=SmartInventory_DWH</ConnectString>
+  </ConnectionProperties>
+  <DataSourceID>6e107635-2f42-4dee-a351-d87b336ee4b5</DataSourceID>
+</RptDataSource>

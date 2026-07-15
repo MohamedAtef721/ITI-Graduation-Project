@@ -1,0 +1,176 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9D70D4-F1B5-46E5-7343-ABF3F7066D4A}|SmartInventory_Cubes.dwproj|C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Sales_cubes.cube||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design",
+      "RelativeMoniker": "D:0:0:{3F9D70D4-F1B5-46E5-7343-ABF3F7066D4A}|SmartInventory_Cubes.dwproj|solutionrelative:Sales_cubes.cube||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9D70D4-F1B5-46E5-7343-ABF3F7066D4A}|SmartInventory_Cubes.dwproj|C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Inventory_cube.cube||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design",
+      "RelativeMoniker": "D:0:0:{3F9D70D4-F1B5-46E5-7343-ABF3F7066D4A}|SmartInventory_Cubes.dwproj|solutionrelative:Inventory_cube.cube||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9D70D4-F1B5-46E5-7343-ABF3F7066D4A}|SmartInventory_Cubes.dwproj|C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Dim Product.dim||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design",
+      "RelativeMoniker": "D:0:0:{3F9D70D4-F1B5-46E5-7343-ABF3F7066D4A}|SmartInventory_Cubes.dwproj|solutionrelative:Dim Product.dim||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9D70D4-F1B5-46E5-7343-ABF3F7066D4A}|SmartInventory_Cubes.dwproj|C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Financial_cube.cube||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design",
+      "RelativeMoniker": "D:0:0:{3F9D70D4-F1B5-46E5-7343-ABF3F7066D4A}|SmartInventory_Cubes.dwproj|solutionrelative:Financial_cube.cube||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9D70D4-F1B5-46E5-7343-ABF3F7066D4A}|SmartInventory_Cubes.dwproj|C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Purchase_cube.cube||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design",
+      "RelativeMoniker": "D:0:0:{3F9D70D4-F1B5-46E5-7343-ABF3F7066D4A}|SmartInventory_Cubes.dwproj|solutionrelative:Purchase_cube.cube||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9D70D4-F1B5-46E5-7343-ABF3F7066D4A}|SmartInventory_Cubes.dwproj|C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Dim Delivery Method.dim||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design",
+      "RelativeMoniker": "D:0:0:{3F9D70D4-F1B5-46E5-7343-ABF3F7066D4A}|SmartInventory_Cubes.dwproj|solutionrelative:Dim Delivery Method.dim||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9D70D4-F1B5-46E5-7343-ABF3F7066D4A}|SmartInventory_Cubes.dwproj|C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Dim Date.dim||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design",
+      "RelativeMoniker": "D:0:0:{3F9D70D4-F1B5-46E5-7343-ABF3F7066D4A}|SmartInventory_Cubes.dwproj|solutionrelative:Dim Date.dim||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9D70D4-F1B5-46E5-7343-ABF3F7066D4A}|SmartInventory_Cubes.dwproj|C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Purchase_dsv.dsv||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design",
+      "RelativeMoniker": "D:0:0:{3F9D70D4-F1B5-46E5-7343-ABF3F7066D4A}|SmartInventory_Cubes.dwproj|solutionrelative:Purchase_dsv.dsv||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9D70D4-F1B5-46E5-7343-ABF3F7066D4A}|SmartInventory_Cubes.dwproj|C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Sales_dsv.dsv||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design",
+      "RelativeMoniker": "D:0:0:{3F9D70D4-F1B5-46E5-7343-ABF3F7066D4A}|SmartInventory_Cubes.dwproj|solutionrelative:Sales_dsv.dsv||{B4191D15-2D32-45F2-906F-E91BBAAA6059}|Design"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Sales_cubes.cube [Design]",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Sales_cubes.cube",
+              "RelativeDocumentMoniker": "Sales_cubes.cube",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Sales_cubes.cube [Design]",
+              "RelativeToolTip": "Sales_cubes.cube [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-25T12:13:43.355Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Dim Product.dim [Design]",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Dim Product.dim",
+              "RelativeDocumentMoniker": "Dim Product.dim",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Dim Product.dim [Design]",
+              "RelativeToolTip": "Dim Product.dim [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-25T11:53:40.649Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Inventory_cube.cube [Design]",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Inventory_cube.cube",
+              "RelativeDocumentMoniker": "Inventory_cube.cube",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Inventory_cube.cube [Design]",
+              "RelativeToolTip": "Inventory_cube.cube [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-25T12:00:07.114Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Financial_cube.cube [Design]",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Financial_cube.cube",
+              "RelativeDocumentMoniker": "Financial_cube.cube",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Financial_cube.cube [Design]",
+              "RelativeToolTip": "Financial_cube.cube [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-25T12:17:44.61Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Purchase_cube.cube [Design]",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Purchase_cube.cube",
+              "RelativeDocumentMoniker": "Purchase_cube.cube",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Purchase_cube.cube [Design]",
+              "RelativeToolTip": "Purchase_cube.cube [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-25T11:51:11.982Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{f4e46f1e-cf83-40aa-b568-a627394bc994}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Dim Delivery Method.dim [Design]",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Dim Delivery Method.dim",
+              "RelativeDocumentMoniker": "Dim Delivery Method.dim",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Dim Delivery Method.dim [Design]",
+              "RelativeToolTip": "Dim Delivery Method.dim [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-20T16:52:48.302Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Dim Date.dim [Design]",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Dim Date.dim",
+              "RelativeDocumentMoniker": "Dim Date.dim",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Dim Date.dim [Design]",
+              "RelativeToolTip": "Dim Date.dim [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-25T11:52:02.521Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Purchase_dsv.dsv [Design]",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Purchase_dsv.dsv",
+              "RelativeDocumentMoniker": "Purchase_dsv.dsv",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Purchase_dsv.dsv [Design]",
+              "RelativeToolTip": "Purchase_dsv.dsv [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-25T11:50:50.399Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Sales_dsv.dsv [Design]",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Sales_dsv.dsv",
+              "RelativeDocumentMoniker": "Sales_dsv.dsv",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Cubes\\Sales_dsv.dsv [Design]",
+              "RelativeToolTip": "Sales_dsv.dsv [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-25T11:10:55.258Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

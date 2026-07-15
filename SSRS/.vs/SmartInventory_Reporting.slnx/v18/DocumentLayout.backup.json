@@ -1,0 +1,114 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Reporting\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AF46E252-2122-9FE4-EEBD-AC14CCD67E7E}|SmartInventory_Reporting.rptproj|C:\\Users\\DELL\\source\\repos\\SmartInventory_Reporting\\Purchase_Detail_Report.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}",
+      "RelativeMoniker": "D:0:0:{AF46E252-2122-9FE4-EEBD-AC14CCD67E7E}|SmartInventory_Reporting.rptproj|solutionrelative:Purchase_Detail_Report.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF46E252-2122-9FE4-EEBD-AC14CCD67E7E}|SmartInventory_Reporting.rptproj|C:\\Users\\DELL\\source\\repos\\SmartInventory_Reporting\\Sales_Details_Report.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}",
+      "RelativeMoniker": "D:0:0:{AF46E252-2122-9FE4-EEBD-AC14CCD67E7E}|SmartInventory_Reporting.rptproj|solutionrelative:Sales_Details_Report.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF46E252-2122-9FE4-EEBD-AC14CCD67E7E}|SmartInventory_Reporting.rptproj|C:\\Users\\DELL\\source\\repos\\SmartInventory_Reporting\\Inventory_Details_Report.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}",
+      "RelativeMoniker": "D:0:0:{AF46E252-2122-9FE4-EEBD-AC14CCD67E7E}|SmartInventory_Reporting.rptproj|solutionrelative:Inventory_Details_Report.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF46E252-2122-9FE4-EEBD-AC14CCD67E7E}|SmartInventory_Reporting.rptproj|C:\\Users\\DELL\\source\\repos\\SmartInventory_Reporting\\Sales_report.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}",
+      "RelativeMoniker": "D:0:0:{AF46E252-2122-9FE4-EEBD-AC14CCD67E7E}|SmartInventory_Reporting.rptproj|solutionrelative:Sales_report.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF46E252-2122-9FE4-EEBD-AC14CCD67E7E}|SmartInventory_Reporting.rptproj|C:\\Users\\DELL\\source\\repos\\SmartInventory_Reporting\\Inventory_report.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}",
+      "RelativeMoniker": "D:0:0:{AF46E252-2122-9FE4-EEBD-AC14CCD67E7E}|SmartInventory_Reporting.rptproj|solutionrelative:Inventory_report.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Inventory_Details_Report.rdl [Design]",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Reporting\\Inventory_Details_Report.rdl",
+              "RelativeDocumentMoniker": "Inventory_Details_Report.rdl",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Reporting\\Inventory_Details_Report.rdl [Design]",
+              "RelativeToolTip": "Inventory_Details_Report.rdl [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-28T21:27:00.754Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Sales_Details_Report.rdl [Design]",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Reporting\\Sales_Details_Report.rdl",
+              "RelativeDocumentMoniker": "Sales_Details_Report.rdl",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Reporting\\Sales_Details_Report.rdl [Design]",
+              "RelativeToolTip": "Sales_Details_Report.rdl [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-28T20:51:57.217Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Purchase_Detail_Report.rdl [Design]",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Reporting\\Purchase_Detail_Report.rdl",
+              "RelativeDocumentMoniker": "Purchase_Detail_Report.rdl",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Reporting\\Purchase_Detail_Report.rdl [Design]",
+              "RelativeToolTip": "Purchase_Detail_Report.rdl [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-28T21:02:10.473Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Sales_report.rdl [Design]",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Reporting\\Sales_report.rdl",
+              "RelativeDocumentMoniker": "Sales_report.rdl",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Reporting\\Sales_report.rdl [Design]",
+              "RelativeToolTip": "Sales_report.rdl [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-28T21:34:56.231Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Inventory_report.rdl [Design]",
+              "DocumentMoniker": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Reporting\\Inventory_report.rdl",
+              "RelativeDocumentMoniker": "Inventory_report.rdl",
+              "ToolTip": "C:\\Users\\DELL\\source\\repos\\SmartInventory_Reporting\\Inventory_report.rdl [Design]",
+              "RelativeToolTip": "Inventory_report.rdl [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-28T21:35:41.846Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{f4e46f1e-cf83-40aa-b568-a627394bc994}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

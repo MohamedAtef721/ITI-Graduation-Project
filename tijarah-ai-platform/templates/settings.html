@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+  <div class="page-title">⚙️ Settings</div>
+  <div class="page-sub">Database, AI provider and email configuration</div>
+</div>
+
+<div class="grid-2" style="gap:20px">
+
+  <!-- Database -->
+  <div class="card">
+    <div class="card-title">🗄️ Database Connection</div>
+    <div class="form-group">
+      <label class="form-label">Server</label>
+      <input class="form-control" id="db-server" value="Mohamed">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Database</label>
+      <input class="form-control" id="db-name" value="SmartInventory_DWH">
+    </div>
+    <div class="form-group">
+      <label class="form-label">ODBC Driver</label>
+      <input class="form-control" id="db-driver" value="ODBC Driver 17 for SQL Server">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Authentication</label>
+      <select class="form-control" id="db-auth" onchange="toggleAuth()">
+        <option value="trusted">Windows Authentication (Trusted)</option>
+        <option value="sql">SQL Server Authentication</option>
+      </select>
+    </div>
+    <div id="sql-auth-fields" style="display:none">
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input class="form-control" id="db-user" placeholder="sa">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-control" id="db-pass" type="password">
+      </div>
+    </div>
+  </div>
+
+  <!-- AI + Email -->
+  <div>
+    <!-- AI Provider -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">🤖 AI Model — Student Bedrock Gateway</div>
+
+      <div class="form-group">
+        <label class="form-label">Model</label>
+        <select class="form-control" id="llm-model">
+          <optgroup label="Anthropic Claude">
+            <option value="anthropic.claude-sonnet-4-6" selected>Claude Sonnet 4.6</option>
+            <option value="anthropic.claude-opus-4-7">Claude Opus 4.7</option>
+            <option value="anthropic.claude-haiku-4-5-20251001-v1:0">Claude Haiku 4.5</option>
+          </optgroup>
+          <optgroup label="DeepSeek">
+            <option value="deepseek.v3.2">DeepSeek V3.2</option>
+            <option value="deepseek.r1-v1:0">DeepSeek R1</option>
+          </optgroup>
+          <optgroup label="OpenAI (gpt-oss)">
+            <option value="openai.gpt-oss-120b-1:0">GPT-OSS 120B</option>
+            <option value="openai.gpt-oss-20b-1:0">GPT-OSS 20B</option>
+            <option value="openai.gpt-oss-safeguard-120b">GPT-OSS Safeguard 120B</option>
+            <option value="openai.gpt-oss-safeguard-20b">GPT-OSS Safeguard 20B</option>
+          </optgroup>
+          <optgroup label="Meta / Amazon / Qwen">
+            <option value="us.meta.llama3-3-70b-instruct-v1:0">Llama 3.3 70B</option>
+            <option value="us.amazon.nova-2-lite-v1:0">Amazon Nova 2 Lite</option>
+            <option value="qwen.qwen3-vl-235b-a22b">Qwen3-VL 235B</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Max tokens</label>
+        <input class="form-control" id="llm-max-tokens" type="number" min="100" step="100" value="2000">
+      </div>
+
+      <div style="background:#0f172a08;border:1px solid #e2e8f0;border-radius:8px;padding:10px 12px;font-size:12px;color:#64748b;display:flex;gap:8px;align-items:flex-start">
+        <span style="font-size:16px">🔑</span>
+        <span>
+          The student API key is read from the <code>SBG_API_KEY</code> environment variable on the
+          server — it's not entered here. Make sure it's exported before starting the app.
+        </span>
+      </div>
+    </div>
+
+    <!-- Gmail -->
+    <div class="card">
+      <div class="card-title">📧 Gmail Email</div>
+      <div class="form-group">
+        <label class="form-label">Sender Gmail</label>
+        <input class="form-control" id="gmail-sender" type="email" placeholder="your@gmail.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">App Password
+          <small style="color:#64748b">(myaccount.google.com/apppasswords)</small>
+        </label>
+        <input class="form-control" id="gmail-pass" type="password">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Recipients (comma-separated)</label>
+        <input class="form-control" id="recipients" placeholder="manager@company.com">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:20px;display:flex;gap:12px;align-items:center">
+  <button class="btn btn-primary btn-lg" onclick="connectDB()">🔌 Connect & Save</button>
+  <div class="loading-overlay" id="conn-loading" style="margin:0">
+    <div class="spinner"></div><span>Connecting...</span>
+  </div>
+</div>
+
+<div id="conn-result" style="margin-top:16px"></div>
+
+<!-- Schema Preview -->
+<div id="schema-section" style="display:none;margin-top:24px">
+  <div class="section-title">📐 Schema Preview</div>
+  <div class="card"><div id="schema-list"></div></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function toggleAuth() {
+  const trusted = document.getElementById("db-auth").value === "trusted";
+  document.getElementById("sql-auth-fields").style.display = trusted ? "none" : "block";
+}
+
+async function connectDB() {
+  showLoading("conn-loading", true);
+  document.getElementById("conn-result").innerHTML = "";
+
+  const trusted = document.getElementById("db-auth").value === "trusted";
+  const payload = {
+    db_server         : document.getElementById("db-server").value,
+    db_name           : document.getElementById("db-name").value,
+    db_driver         : document.getElementById("db-driver").value,
+    db_trusted        : trusted,
+    db_username       : document.getElementById("db-user").value,
+    db_password       : document.getElementById("db-pass").value,
+    llm_model         : document.getElementById("llm-model").value,
+    llm_max_tokens    : parseInt(document.getElementById("llm-max-tokens").value) || 1000,
+    gmail_sender      : document.getElementById("gmail-sender").value,
+    gmail_app_password: document.getElementById("gmail-pass").value,
+    report_recipients : document.getElementById("recipients").value,
+  };
+
+  try {
+    const res  = await fetch("/api/connect", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+
+    if (data.ok) {
+      document.getElementById("conn-result").innerHTML = `
+        <div class="alert alert-low">
+          <span style="font-size:20px">✅</span>
+          <div>
+            <div class="alert-title">Connected successfully!</div>
+            <div class="alert-body">
+              Found ${data.tables} tables in <strong>${payload.db_name}</strong> &nbsp;|&nbsp;
+              AI Model: <strong>${payload.llm_model}</strong>
+            </div>
+          </div>
+        </div>`;
+      showToast("Connected to " + payload.db_name, "success");
+      checkStatus();
+      renderSchema(data.schema);
+    } else {
+      document.getElementById("conn-result").innerHTML = `
+        <div class="alert alert-high">
+          <span style="font-size:20px">❌</span>
+          <div>
+            <div class="alert-title">Connection failed</div>
+            <div class="alert-body">${data.error}</div>
+          </div>
+        </div>`;
+      showToast("Connection failed", "error");
+    }
+  } catch(e) {
+    showToast("Error: " + e.message, "error");
+  } finally {
+    showLoading("conn-loading", false);
+  }
+}
+
+function renderSchema(schema) {
+  const section = document.getElementById("schema-section");
+  const list    = document.getElementById("schema-list");
+  section.style.display = "block";
+  list.innerHTML = Object.entries(schema).map(([table, cols]) => `
+    <details style="margin-bottom:8px">
+      <summary style="cursor:pointer;font-size:13px;font-weight:600;color:#4f8ef7;padding:6px 0">
+        ${table} <span style="color:#64748b;font-weight:400">(${cols.length} columns)</span>
+      </summary>
+      <div style="padding:8px 0 4px 16px">
+        ${cols.map(c=>`
+          <span style="display:inline-block;margin:3px 6px 3px 0;font-size:12px;color:#94a3b8">
+            • ${c.name} <code style="color:#4f8ef7;font-size:11px">${c.type}</code>
+          </span>`).join("")}
+      </div>
+    </details>
+  `).join("");
+}
+</script>
+{% endblock %}

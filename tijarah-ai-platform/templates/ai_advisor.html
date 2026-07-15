@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+  <div class="page-title">🤖 AI Business Advisor</div>
+  <div class="page-sub">Ask anything about your business in Arabic or English — data-driven answers with memory</div>
+</div>
+
+<!-- Status bar -->
+<div id="ai-status-bar" style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;
+     padding:12px 16px;background:var(--bg-secondary);border-radius:10px;border:1px solid var(--border);font-size:12px">
+  <span>🤖 Provider: <strong id="sb-provider" style="color:var(--accent)">—</strong></span>
+  <span>📋 Model: <strong id="sb-model" style="color:var(--accent)">—</strong></span>
+  <span>🧠 Memory: <strong id="sb-memory" style="color:var(--green)">Enabled</strong></span>
+  <span>💬 Interactions: <strong id="sb-count" style="color:var(--orange)">0</strong></span>
+  <button onclick="clearMemory()" style="margin-left:auto;background:transparent;border:1px solid var(--border);
+    color:var(--text-muted);border-radius:6px;padding:3px 10px;font-size:11px;cursor:pointer">
+    🗑 Clear Memory
+  </button>
+</div>
+
+<!-- Example questions -->
+<div class="card" style="margin-bottom:16px">
+  <div class="card-title">💡 Try asking:</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap" id="examples"></div>
+</div>
+
+<!-- Chat box -->
+<div class="chat-box" id="chat-box"></div>
+
+<div class="loading-overlay" id="ai-loading">
+  <div class="spinner"></div>
+  <span id="loading-text">Analyzing your data...</span>
+</div>
+
+<!-- Input -->
+<div class="chat-input-row">
+  <input class="form-control" id="chat-input" type="text"
+         placeholder="Ask a business question... / اسأل سؤالاً تجارياً..."
+         onkeydown="if(event.key==='Enter') sendMessage()">
+  <button class="btn btn-primary" onclick="sendMessage()">➤ Send</button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const EXAMPLES_EN = [
+  "Who are my top 5 customers this year?",
+  "Which supplier should I be concerned about?",
+  "Which products are at risk of running out?",
+  "What is my profit margin by category?",
+  "Show me products bought by that customer",
+  "Compare revenue this year vs last year",
+];
+const EXAMPLES_AR = [
+  "من هم أفضل 5 عملاء لدي هذا العام؟",
+  "أي مورد يجب أن أكون قلقاً بشأنه؟",
+  "أي منتجات معرضة لنفاد المخزون؟",
+  "ما هو هامش ربحي حسب فئة المنتج؟",
+  "أظهر المنتجات التي اشتراها ذلك العميل",
+];
+
+function renderExamples() {
+  const lang = localStorage.getItem("si_lang") || "en";
+  const exs  = lang === "ar" ? EXAMPLES_AR : EXAMPLES_EN;
+  document.getElementById("examples").innerHTML = exs.map(e =>
+    `<button class="btn btn-secondary" style="font-size:12px;padding:6px 12px"
+             onclick="useExample(this.textContent)">${e}</button>`
+  ).join("");
+}
+
+function useExample(text) {
+  document.getElementById("chat-input").value = text;
+  sendMessage();
+}
+
+async function loadStatus() {
+  try {
+    const r = await fetch("/api/status");
+    const d = await r.json();
+    const cfg = d.config || {};
+    document.getElementById("sb-provider").textContent = "Bedrock Gateway";
+    document.getElementById("sb-model").textContent    = cfg.llm_model || "—";
+    const memR = await fetch("/api/ai/memory");
+    const memD = await memR.json();
+    document.getElementById("sb-count").textContent = (memD.conversation || []).length;
+  } catch {}
+}
+
+// ── Chat persistence ────────────────────────────────────────────────
+// Like cachedFetch() elsewhere in the app, this exists because every
+// page navigation here is a full reload. Without this, the chat would
+// reset to the greeting message every time you left and came back.
+// We store the full rendered conversation (not just the AI's short-term
+// memory, which the backend already tracks separately for context) so
+// tables, SQL previews, and metadata are restored exactly as shown.
+const CHAT_HISTORY_KEY = "ai_advisor:chat_history";
+
+function loadChatHistory() {
+  try { return JSON.parse(sessionStorage.getItem(CHAT_HISTORY_KEY)) || []; }
+  catch { return []; }
+}
+function saveChatHistory(history) {
+  sessionStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(history));
+}
+function renderGreeting() {
+  document.getElementById("chat-box").innerHTML = `
+    <div class="chat-msg">
+      <div class="chat-avatar av-ai">🤖</div>
+      <div class="chat-bubble bubble-ai">
+        Hello! I'm your AI Business Advisor with memory. I remember our conversation so you can ask follow-up questions like "show more details" or "compare with the previous result".<br><br>
+        مرحباً! أنا مستشارك الذكي مع ذاكرة محادثة. يمكنك سؤالي أسئلة متابعة مثل "أظهر المزيد" أو "قارن بالنتيجة السابقة".
+      </div>
+    </div>`;
+}
+function restoreChat() {
+  const history = loadChatHistory();
+  if (!history.length) { renderGreeting(); return; }
+  history.forEach(m => appendMsg(m.role, m.content, m.sql, m.tableData, m.meta, /*persist=*/false));
+}
+
+async function clearMemory() {
+  await fetch("/api/ai/memory/clear", {method:"POST"});
+  document.getElementById("sb-count").textContent = "0";
+  saveChatHistory([]);
+  renderGreeting();
+  showToast("Memory cleared", "success");
+}
+
+// ── Lightweight Markdown → HTML renderer for AI answers ────────────────
+// Handles **bold**, numbered lists, bullet lists, and paragraphs.
+// Escapes HTML first so the model's output can never inject markup.
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function formatAiText(text) {
+  if (!text) return "";
+  let safe = escapeHtml(text);
+
+  // Insert real line breaks BEFORE converting **bold** to <strong>, while
+  // the "**" markers are still literally present — lets us reliably
+  // detect "- **Label:**" as a new bullet even without preceding
+  // punctuation (the common AI shape: "...** - **Next:** ...").
+  safe = safe
+    .replace(/\s-\s(?=\*\*)/g, "\n- ")
+    .replace(/\s(\d+)\.\s(?=\*\*)/g, "\n$1. ")
+    .replace(/([.:!?])\s+-\s+(?=\S)/g, "$1\n- ")
+    .replace(/([.:!?])\s+(\d+)\.\s+(?=\S)/g, "$1\n$2. ");
+
+  safe = safe.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+
+  const lines = safe.split("\n").map(l => l.trim()).filter(l => l.length);
+
+  let html = "";
+  let listType = null; // 'ol' | 'ul' | null
+  const closeList = () => {
+    if (listType) { html += `</${listType}>`; listType = null; }
+  };
+
+  lines.forEach(line => {
+    const numMatch    = line.match(/^(\d+)\.\s+(.*)/);
+    const bulletMatch = line.match(/^[-*]\s+(.*)/);
+
+    if (numMatch) {
+      if (listType !== "ol") { closeList(); html += `<ol style="margin:6px 0 6px 20px;padding:0">`; listType = "ol"; }
+      html += `<li style="margin-bottom:5px;line-height:1.5">${numMatch[2]}</li>`;
+    } else if (bulletMatch) {
+      if (listType !== "ul") { closeList(); html += `<ul style="margin:6px 0 6px 20px;padding:0">`; listType = "ul"; }
+      html += `<li style="margin-bottom:5px;line-height:1.5">${bulletMatch[1]}</li>`;
+    } else {
+      closeList();
+      html += `<p style="margin:6px 0;line-height:1.6">${line}</p>`;
+    }
+  });
+  closeList();
+  return html;
+}
+
+function appendMsg(role, content, sql, tableData, meta, persist = true) {
+  const box    = document.getElementById("chat-box");
+  const isUser = role === "user";
+  const uid    = "sql_" + Date.now();
+
+  // Meta info bar (provider, time, rows)
+  let metaHtml = "";
+  if (meta && !isUser) {
+    metaHtml = `
+      <div style="display:flex;gap:12px;font-size:11px;color:var(--text-muted);margin-top:6px;flex-wrap:wrap">
+        <span>🤖 ${meta.provider || ""}/${meta.model || ""}</span>
+        <span>⏱ ${meta.execution_time || 0}s</span>
+        ${meta.rows_returned != null ? `<span>📊 ${meta.rows_returned} rows</span>` : ""}
+        <span>🧠 Memory: ${meta.memory_count || 0}</span>
+        ${meta.intent ? `<span>🎯 Intent: ${meta.intent}</span>` : ""}
+      </div>`;
+  }
+
+  let dataHtml = "";
+  if (tableData && tableData.length) {
+    const keys = Object.keys(tableData[0]);
+    const ths  = keys.map(k => `<th>${k}</th>`).join("");
+    const trs  = tableData.slice(0,20).map(r =>
+      "<tr>" + keys.map(k => {
+        const v = r[k];
+        if (v === null || v === undefined) return `<td>—</td>`;
+        if (isTextColumn(k)) return `<td>${v}</td>`;
+        const n = parseFloat(v);
+        return `<td>${(!isNaN(n) && isFinite(n)) ? fmtNum(n) : v}</td>`;
+      }).join("") + "</tr>"
+    ).join("");
+    dataHtml = `<div style="overflow-x:auto;margin-top:8px;max-width:100%">
+      <table class="data-table"><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table></div>`;
+  }
+
+  const sqlHtml = sql ? `
+    <div class="sql-toggle" onclick="
+      const el=document.getElementById('${uid}');
+      el.style.display=el.style.display==='none'?'block':'none'">
+      📝 Show generated SQL
+    </div>
+    <div class="sql-block" id="${uid}">${sql}</div>
+  ` : "";
+
+  const bodyHtml = isUser
+    ? escapeHtml(content).replace(/\n/g, "<br>")
+    : formatAiText(content);
+
+  box.innerHTML += `
+    <div class="chat-msg ${isUser ? 'user' : ''}">
+      <div class="chat-avatar ${isUser ? 'av-user' : 'av-ai'}">${isUser ? '👤' : '🤖'}</div>
+      <div style="max-width:80%">
+        <div class="chat-bubble ${isUser ? 'bubble-user' : 'bubble-ai'}">
+          ${bodyHtml}
+        </div>
+        ${metaHtml}
+        ${sqlHtml}
+        ${dataHtml}
+      </div>
+    </div>`;
+  box.scrollTop = box.scrollHeight;
+
+  if (persist) {
+    const history = loadChatHistory();
+    history.push({ role, content, sql, tableData, meta });
+    saveChatHistory(history);
+  }
+}
+
+async function sendMessage() {
+  const input    = document.getElementById("chat-input");
+  const question = input.value.trim();
+  if (!question) return;
+  input.value = "";
+
+  appendMsg("user", question);
+  showLoading("ai-loading", true);
+
+  try {
+    const res  = await fetch("/api/ai/ask", {
+      method : "POST",
+      headers: {"Content-Type":"application/json"},
+      body   : JSON.stringify({question}),
+    });
+    const data = await res.json();
+
+    if (data.error) {
+      appendMsg("ai", "⚠️ " + data.error);
+    } else {
+      appendMsg("ai", data.answer || "No response.", data.sql, data.data, {
+        provider      : data.provider,
+        model         : data.model,
+        execution_time: data.execution_time,
+        rows_returned : data.rows_returned,
+        memory_count  : data.memory_count,
+        intent        : data.intent,
+      });
+      // Update memory count in status bar
+      if (data.memory_count != null) {
+        document.getElementById("sb-count").textContent = data.memory_count;
+      }
+    }
+  } catch(e) {
+    appendMsg("ai", "Error: " + e.message);
+  } finally {
+    showLoading("ai-loading", false);
+  }
+}
+
+renderExamples();
+loadStatus();
+restoreChat();
+</script>
+{% endblock %}

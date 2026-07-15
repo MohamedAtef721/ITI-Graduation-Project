@@ -1,0 +1,84 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Power Bi ITI\\ITI Graduation Project\\SSIS\\SmartInventory_DWH\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0320C3D7-BEC5-D87E-B2E2-951AA3E36D5A}|SmartInventory_DWH.dtproj|D:\\Power Bi ITI\\ITI Graduation Project\\SSIS\\SmartInventory_DWH\\Inc_Loading_Facts_Package.dtsx||{CC84AFBD-DA02-46F4-8623-9F07E5569EDB}|Design",
+      "RelativeMoniker": "D:0:0:{0320C3D7-BEC5-D87E-B2E2-951AA3E36D5A}|SmartInventory_DWH.dtproj|solutionrelative:Inc_Loading_Facts_Package.dtsx||{CC84AFBD-DA02-46F4-8623-9F07E5569EDB}|Design"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0320C3D7-BEC5-D87E-B2E2-951AA3E36D5A}|SmartInventory_DWH.dtproj|D:\\Power Bi ITI\\ITI Graduation Project\\SSIS\\SmartInventory_DWH\\Loading_Facts_Package.dtsx||{CC84AFBD-DA02-46F4-8623-9F07E5569EDB}|Design",
+      "RelativeMoniker": "D:0:0:{0320C3D7-BEC5-D87E-B2E2-951AA3E36D5A}|SmartInventory_DWH.dtproj|solutionrelative:Loading_Facts_Package.dtsx||{CC84AFBD-DA02-46F4-8623-9F07E5569EDB}|Design"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0320C3D7-BEC5-D87E-B2E2-951AA3E36D5A}|SmartInventory_DWH.dtproj|D:\\Power Bi ITI\\ITI Graduation Project\\SSIS\\SmartInventory_DWH\\Loading_Dims_Package.dtsx||{CC84AFBD-DA02-46F4-8623-9F07E5569EDB}|Design",
+      "RelativeMoniker": "D:0:0:{0320C3D7-BEC5-D87E-B2E2-951AA3E36D5A}|SmartInventory_DWH.dtproj|solutionrelative:Loading_Dims_Package.dtsx||{CC84AFBD-DA02-46F4-8623-9F07E5569EDB}|Design"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cab27b98-a314-48d2-9746-efe8ba39ccb0}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Inc_Loading_Facts_Package.dtsx [Design]",
+              "DocumentMoniker": "D:\\Power Bi ITI\\ITI Graduation Project\\SSIS\\SmartInventory_DWH\\Inc_Loading_Facts_Package.dtsx",
+              "RelativeDocumentMoniker": "Inc_Loading_Facts_Package.dtsx",
+              "ToolTip": "D:\\Power Bi ITI\\ITI Graduation Project\\SSIS\\SmartInventory_DWH\\Inc_Loading_Facts_Package.dtsx [Design]",
+              "RelativeToolTip": "Inc_Loading_Facts_Package.dtsx [Design]",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMlSURBVDhPjZQ7bJtVGIaf41vsOk7ihICdxK1wiWiTFhW1QBEDapEQAnVoOzGUAalDNybECgsINqQOrBUDGzAgIUCVijoUqAQoTuM4JW4dO3Yuvvz2/9v//TC4/mM7ROGVPumc73zvq/d85yIAPvniq9/S8ydf4hComk5lZ/fHv\u002B7fu/nd11/\u002BMLyOlDLQG59Mz5CamRosGMLdP1ZZWlk9r1mIK\u002B99wM/f37rTUmqqVyCE8ANcePPS9RdfWJidS0xxJDxyYOSL21iOGx6NRie3qsrs9NOJWkdt1rSW0u5p\u002Bjz1/wm/348r5eT2bu1iPJG\u002BFhmdmO9fHxDUTYfthuGFptsY1l5O1V0e5ov8nckSG42GipvlKy1Ve65fw\u002BshQHajxbf3Kt78jTPTTI\u002BF\u002BObXEgAtxSCeSPPOsyksy\u002Ban23f62F0MOHQl6K6P9vgM2sQsVjjWzTnQHksg506wcPYsr7\u002B8SDAYRAjRT4dhQQCkizA0hK4hbPNJTiKMDgHLIBYOMTE\u002BNszyMCA4Hg2yOBflVNzmdNxiOuwSiwRYTI1yatJmcdwiHnLoOP2sQQz08HgyyvFktD8FwLULKSSgW6BaUKjUhks87N/yAdAtaFmgGNC2wR8MAYf08J\u002Byxq3bG14sPW7iuNCxu86ahqRhSFRTIBFw2KEomsVyUSNTD7JUD1Jp\u002B9EdaJmgGJKG0XWomRLp2CBlPx2GBQEQPuRIBBmOYooAqtlzBnUdqk2TmqKju0Fik0mS6dML8dSZixw5dm6foE9A2OcSaZSJ1Es4quqJNXRodCSlrSaPNhq0gzMsnH\u002BbS\u002B9//OG5q5//wtF3bzJ8yidSMW5MRTAsUG1whZ\u002Bm2d1m0wTNAsuFuaciXH0tyW5Dp7SlUSlU90z1Btn1Te7ef8DSgxwrqznW13KsraywtpxhM5ehsZ5BLy7jNre6RCnptC2q9Q4t7ckD6Dk0TZs/Mzl2qgffrx4CE0cZOfY8hbLKWkEh\u002B1ihUvV\u002Br65gPv9webepy0Kh2M/9Tzwz/2rSFImU1Drkyy0elVVKO3uC\u002By/SYUi89RGzlz8dTqPlfyf72Sv/AiuphR\u002BNLPK3AAAAAElFTkSuQmCC",
+              "WhenOpened": "2026-07-06T23:00:25.684Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Loading_Facts_Package.dtsx [Design]",
+              "DocumentMoniker": "D:\\Power Bi ITI\\ITI Graduation Project\\SSIS\\SmartInventory_DWH\\Loading_Facts_Package.dtsx",
+              "RelativeDocumentMoniker": "Loading_Facts_Package.dtsx",
+              "ToolTip": "D:\\Power Bi ITI\\ITI Graduation Project\\SSIS\\SmartInventory_DWH\\Loading_Facts_Package.dtsx [Design]",
+              "RelativeToolTip": "Loading_Facts_Package.dtsx [Design]",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMlSURBVDhPjZQ7bJtVGIaf41vsOk7ihICdxK1wiWiTFhW1QBEDapEQAnVoOzGUAalDNybECgsINqQOrBUDGzAgIUCVijoUqAQoTuM4JW4dO3Yuvvz2/9v//TC4/mM7ROGVPumc73zvq/d85yIAPvniq9/S8ydf4hComk5lZ/fHv\u002B7fu/nd11/\u002BMLyOlDLQG59Mz5CamRosGMLdP1ZZWlk9r1mIK\u002B99wM/f37rTUmqqVyCE8ANcePPS9RdfWJidS0xxJDxyYOSL21iOGx6NRie3qsrs9NOJWkdt1rSW0u5p\u002Bjz1/wm/348r5eT2bu1iPJG\u002BFhmdmO9fHxDUTYfthuGFptsY1l5O1V0e5ov8nckSG42GipvlKy1Ve65fw\u002BshQHajxbf3Kt78jTPTTI\u002BF\u002BObXEgAtxSCeSPPOsyksy\u002Ban23f62F0MOHQl6K6P9vgM2sQsVjjWzTnQHksg506wcPYsr7\u002B8SDAYRAjRT4dhQQCkizA0hK4hbPNJTiKMDgHLIBYOMTE\u002BNszyMCA4Hg2yOBflVNzmdNxiOuwSiwRYTI1yatJmcdwiHnLoOP2sQQz08HgyyvFktD8FwLULKSSgW6BaUKjUhks87N/yAdAtaFmgGNC2wR8MAYf08J\u002Byxq3bG14sPW7iuNCxu86ahqRhSFRTIBFw2KEomsVyUSNTD7JUD1Jp\u002B9EdaJmgGJKG0XWomRLp2CBlPx2GBQEQPuRIBBmOYooAqtlzBnUdqk2TmqKju0Fik0mS6dML8dSZixw5dm6foE9A2OcSaZSJ1Es4quqJNXRodCSlrSaPNhq0gzMsnH\u002BbS\u002B9//OG5q5//wtF3bzJ8yidSMW5MRTAsUG1whZ\u002Bm2d1m0wTNAsuFuaciXH0tyW5Dp7SlUSlU90z1Btn1Te7ef8DSgxwrqznW13KsraywtpxhM5ehsZ5BLy7jNre6RCnptC2q9Q4t7ckD6Dk0TZs/Mzl2qgffrx4CE0cZOfY8hbLKWkEh\u002B1ihUvV\u002Br65gPv9webepy0Kh2M/9Tzwz/2rSFImU1Drkyy0elVVKO3uC\u002By/SYUi89RGzlz8dTqPlfyf72Sv/AiuphR\u002BNLPK3AAAAAElFTkSuQmCC",
+              "WhenOpened": "2026-07-06T22:52:14.716Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Loading_Dims_Package.dtsx [Design]",
+              "DocumentMoniker": "D:\\Power Bi ITI\\ITI Graduation Project\\SSIS\\SmartInventory_DWH\\Loading_Dims_Package.dtsx",
+              "RelativeDocumentMoniker": "Loading_Dims_Package.dtsx",
+              "ToolTip": "D:\\Power Bi ITI\\ITI Graduation Project\\SSIS\\SmartInventory_DWH\\Loading_Dims_Package.dtsx [Design]",
+              "RelativeToolTip": "Loading_Dims_Package.dtsx [Design]",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMlSURBVDhPjZQ7bJtVGIaf41vsOk7ihICdxK1wiWiTFhW1QBEDapEQAnVoOzGUAalDNybECgsINqQOrBUDGzAgIUCVijoUqAQoTuM4JW4dO3Yuvvz2/9v//TC4/mM7ROGVPumc73zvq/d85yIAPvniq9/S8ydf4hComk5lZ/fHv\u002B7fu/nd11/\u002BMLyOlDLQG59Mz5CamRosGMLdP1ZZWlk9r1mIK\u002B99wM/f37rTUmqqVyCE8ANcePPS9RdfWJidS0xxJDxyYOSL21iOGx6NRie3qsrs9NOJWkdt1rSW0u5p\u002Bjz1/wm/348r5eT2bu1iPJG\u002BFhmdmO9fHxDUTYfthuGFptsY1l5O1V0e5ov8nckSG42GipvlKy1Ve65fw\u002BshQHajxbf3Kt78jTPTTI\u002BF\u002BObXEgAtxSCeSPPOsyksy\u002Ban23f62F0MOHQl6K6P9vgM2sQsVjjWzTnQHksg506wcPYsr7\u002B8SDAYRAjRT4dhQQCkizA0hK4hbPNJTiKMDgHLIBYOMTE\u002BNszyMCA4Hg2yOBflVNzmdNxiOuwSiwRYTI1yatJmcdwiHnLoOP2sQQz08HgyyvFktD8FwLULKSSgW6BaUKjUhks87N/yAdAtaFmgGNC2wR8MAYf08J\u002Byxq3bG14sPW7iuNCxu86ahqRhSFRTIBFw2KEomsVyUSNTD7JUD1Jp\u002B9EdaJmgGJKG0XWomRLp2CBlPx2GBQEQPuRIBBmOYooAqtlzBnUdqk2TmqKju0Fik0mS6dML8dSZixw5dm6foE9A2OcSaZSJ1Es4quqJNXRodCSlrSaPNhq0gzMsnH\u002BbS\u002B9//OG5q5//wtF3bzJ8yidSMW5MRTAsUG1whZ\u002Bm2d1m0wTNAsuFuaciXH0tyW5Dp7SlUSlU90z1Btn1Te7ef8DSgxwrqznW13KsraywtpxhM5ehsZ5BLy7jNre6RCnptC2q9Q4t7ckD6Dk0TZs/Mzl2qgffrx4CE0cZOfY8hbLKWkEh\u002B1ihUvV\u002Br65gPv9webepy0Kh2M/9Tzwz/2rSFImU1Drkyy0elVVKO3uC\u002By/SYUi89RGzlz8dTqPlfyf72Sv/AiuphR\u002BNLPK3AAAAAElFTkSuQmCC",
+              "WhenOpened": "2026-07-06T22:35:29.539Z",
+              "EditorCaption": " [Design]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

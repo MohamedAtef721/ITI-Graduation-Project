@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+  <div class="page-title">📈 Sales Forecasting</div>
+  <div class="page-sub">Prophet ML model with AI interpretation — select scope and horizon</div>
+</div>
+
+<div class="card" style="margin-bottom:20px">
+  <div class="grid-3" style="gap:16px;align-items:flex-end">
+    <div class="form-group" style="margin:0">
+      <label class="form-label">Forecast Scope</label>
+      <select class="form-control" id="scope-select">
+        <option value="">All Products</option>
+      </select>
+    </div>
+    <div class="form-group" style="margin:0">
+      <label class="form-label">Horizon</label>
+      <select class="form-control" id="horizon-select">
+        <option value="1">1 Month</option>
+        <option value="2">2 Months</option>
+        <option value="3" selected>3 Months</option>
+        <option value="6">6 Months</option>
+        <option value="12">12 Months</option>
+      </select>
+    </div>
+    <button class="btn btn-primary btn-lg" onclick="runForecast()">🚀 Run Forecast</button>
+  </div>
+</div>
+
+<div class="loading-overlay" id="fore-loading">
+  <div class="spinner"></div>
+  <span>Training forecasting model (Prophet)...</span>
+</div>
+
+<div id="fore-results" style="display:none">
+  <!-- KPI row -->
+  <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:20px">
+    <div class="kpi-card blue">
+      <span class="kpi-icon">📊</span>
+      <div class="kpi-label">Recent Actual</div>
+      <div class="kpi-value" id="f-actual">—</div>
+    </div>
+    <div class="kpi-card purple">
+      <span class="kpi-icon">🔮</span>
+      <div class="kpi-label">Forecasted</div>
+      <div class="kpi-value" id="f-forecast">—</div>
+    </div>
+    <div class="kpi-card" id="f-trend-card">
+      <span class="kpi-icon" id="f-trend-icon">→</span>
+      <div class="kpi-label">Projected Change</div>
+      <div class="kpi-value" id="f-pct">—</div>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-title">Actual vs Forecast</div>
+    <div style="height:300px"><canvas id="foreChart"></canvas></div>
+  </div>
+
+  <!-- AI Narrative -->
+  <div class="card">
+    <div class="card-title">🤖 AI Interpretation & Recommendations</div>
+    <div id="fore-narrative" style="font-size:14px;line-height:1.8;color:var(--text-1)"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// NOTE on caching strategy for this page: unlike the dashboard-style
+// pages (Home, Sales, Inventory, Purchasing), a forecast run is an
+// expensive manual action (trains a Prophet model), not passive data
+// to auto-refresh. So instead of cachedFetch's "show cached, then
+// silently re-fetch" pattern, we simply persist the LAST forecast
+// result + the scope/horizon that produced it, and restore that exact
+// view on page load — without re-running Prophet. A fresh run only
+// happens when the user explicitly clicks "Run Forecast" again.
+const LAST_RUN_KEY = "forecasting:last-run";
+
+let foreChart;
+
+// Same lightweight Markdown → HTML renderer used on the AI Advisor page:
+// handles **bold**, numbered lists, and bullet lists instead of dumping
+// the model's raw text (with literal "**" and run-on bullets) into the page.
+function escapeHtml(str) {
+  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+function formatAiText(text) {
+  if (!text) return "";
+  let safe = escapeHtml(text);
+  safe = safe
+    .replace(/\s-\s(?=\*\*)/g, "\n- ")
+    .replace(/\s(\d+)\.\s(?=\*\*)/g, "\n$1. ")
+    .replace(/([.:!?])\s+-\s+(?=\S)/g, "$1\n- ")
+    .replace(/([.:!?])\s+(\d+)\.\s+(?=\S)/g, "$1\n$2. ");
+  safe = safe.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+
+  const lines = safe.split("\n").map(l => l.trim()).filter(l => l.length);
+  let html = "";
+  let listType = null;
+  const closeList = () => { if (listType) { html += `</${listType}>`; listType = null; } };
+
+  lines.forEach(line => {
+    const numMatch    = line.match(/^(\d+)\.\s+(.*)/);
+    const bulletMatch = line.match(/^[-*]\s+(.*)/);
+    if (numMatch) {
+      if (listType !== "ol") { closeList(); html += `<ol style="margin:6px 0 6px 20px;padding:0">`; listType = "ol"; }
+      html += `<li style="margin-bottom:5px;line-height:1.5">${numMatch[2]}</li>`;
+    } else if (bulletMatch) {
+      if (listType !== "ul") { closeList(); html += `<ul style="margin:6px 0 6px 20px;padding:0">`; listType = "ul"; }
+      html += `<li style="margin-bottom:5px;line-height:1.5">${bulletMatch[1]}</li>`;
+    } else {
+      closeList();
+      html += `<p style="margin:6px 0;line-height:1.6">${line}</p>`;
+    }
+  });
+  closeList();
+  return html;
+}
+
+async function loadProducts() {
+  await cachedFetch("forecasting:products", "/api/forecast/products", rows => {
+    const sel = document.getElementById("scope-select");
+    [...sel.querySelectorAll("option[data-p]")].forEach(o => o.remove());
+    rows.forEach(r => {
+      const o = document.createElement("option");
+      o.value = r.ProductKey;
+      o.textContent = r.product_name;
+      o.dataset.p = "1";
+      sel.appendChild(o);
+    });
+  });
+}
+
+function renderForecast(data) {
+  document.getElementById("f-actual").textContent   = fmtNum(data.recent_actual,  "$");
+  document.getElementById("f-forecast").textContent = fmtNum(data.forecast_total, "$");
+  const pct = data.pct_change;
+  document.getElementById("f-pct").textContent = pct != null ? `${pct > 0 ? "+" : ""}${pct}%` : "N/A";
+  const trendCard = document.getElementById("f-trend-card");
+  const trendIcon = document.getElementById("f-trend-icon");
+  trendCard.className = "kpi-card " + (data.trend === "up" ? "green" : data.trend === "down" ? "orange" : "blue");
+  trendIcon.textContent = data.trend === "up" ? "↑" : data.trend === "down" ? "↓" : "→";
+
+  if (foreChart) foreChart.destroy();
+  const history  = data.history;
+  const forecast = data.forecast;
+
+  const allLabels  = forecast.map(r => r.ds);
+  const histData   = forecast.map(r => history.find(h => h.ds === r.ds)?.y ?? null);
+  const yhatData   = forecast.map(r => r.yhat);
+  const upperData  = forecast.map(r => r.yhat_upper);
+  const lowerData  = forecast.map(r => r.yhat_lower);
+
+  const ctx = document.getElementById("foreChart").getContext("2d");
+  foreChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: allLabels,
+      datasets: [
+        { label: "Actual Sales", data: histData, borderColor: "#4f8ef7",
+          backgroundColor: "rgba(79,142,247,0.08)", borderWidth: 2, pointRadius: 0, fill: false, tension: 0.3 },
+        { label: "Forecast", data: yhatData, borderColor: "#8b5cf6",
+          borderDash: [6,3], borderWidth: 2, pointRadius: 0, fill: false, tension: 0.3 },
+        { label: "Upper Bound", data: upperData, borderColor: "rgba(139,92,246,0.2)",
+          backgroundColor: "rgba(139,92,246,0.1)", borderWidth: 1, pointRadius: 0, fill: "+1", tension: 0.3 },
+        { label: "Lower Bound", data: lowerData, borderColor: "rgba(139,92,246,0.2)",
+          borderWidth: 1, pointRadius: 0, fill: false, tension: 0.3 },
+      ]
+    },
+    options: {
+      ...chartDefaults(),
+      plugins: { ...chartDefaults().plugins, legend: { labels: chartDefaults().plugins.legend.labels } }
+    }
+  });
+
+  document.getElementById("fore-narrative").innerHTML = formatAiText(data.narrative || "");
+  document.getElementById("fore-results").style.display = "block";
+}
+
+async function runForecast() {
+  const productKey = document.getElementById("scope-select").value || null;
+  const horizon    = parseInt(document.getElementById("horizon-select").value);
+
+  document.getElementById("fore-results").style.display = "none";
+  showLoading("fore-loading", true);
+
+  try {
+    const res  = await fetch("/api/forecast/run", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ product_key: productKey ? parseInt(productKey) : null, horizon_months: horizon }),
+    });
+    const data = await res.json();
+
+    if (data.error) { showToast(data.error, "error"); return; }
+
+    renderForecast(data);
+    sessionStorage.setItem(LAST_RUN_KEY, JSON.stringify({ productKey, horizon, data }));
+
+  } catch(e) {
+    showToast("Forecast failed: " + e.message, "error");
+  } finally {
+    showLoading("fore-loading", false);
+  }
+}
+
+function restoreLastRun() {
+  const raw = sessionStorage.getItem(LAST_RUN_KEY);
+  if (!raw) return;
+  try {
+    const { productKey, horizon, data } = JSON.parse(raw);
+    // Restore the selections that produced this result. Product options
+    // are added asynchronously by loadProducts(), so retry briefly until
+    // the option exists (or give up and leave the default selection).
+    const applySelection = () => {
+      if (productKey) document.getElementById("scope-select").value = productKey;
+      document.getElementById("horizon-select").value = horizon;
+    };
+    applySelection();
+    setTimeout(applySelection, 300); // re-apply after product list populates
+
+    renderForecast(data);
+  } catch {}
+}
+
+loadProducts();
+restoreLastRun();
+</script>
+{% endblock %}

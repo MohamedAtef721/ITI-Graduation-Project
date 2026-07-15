@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+  <div class="page-title">🚚 Purchasing Performance</div>
+  <div class="page-sub">Supplier rankings and purchase trends</div>
+</div>
+
+<div class="filter-bar">
+  <label>Filter by Year:</label>
+  <select class="form-control" id="year-select" onchange="reloadAll()">
+    <option value="All">All Years</option>
+  </select>
+</div>
+
+<div class="card" style="margin-bottom:20px">
+  <div class="card-title">Purchase Cost Trend</div>
+  <div style="height:230px"><canvas id="trendChart"></canvas></div>
+</div>
+
+<div class="grid-2" style="margin-bottom:20px">
+  <div class="card">
+    <div class="card-title">Top Suppliers by Spend</div>
+    <div style="height:260px"><canvas id="supplierChart"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Supplier Details</div>
+    <div id="supplier-table"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Top Purchased Products</div>
+  <div id="prod-table"></div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+// Uses cachedFetch() from static/js/main.js — renders last-known data
+// instantly on navigation, then refreshes quietly in the background.
+// Cache keys include the selected year so switching years never shows
+// stale data from a different filter.
+
+let trendC, supplierC;
+
+async function loadYears() {
+  await cachedFetch("purchasing:years", "/api/sales/years", rows => {
+    const sel = document.getElementById("year-select");
+    [...sel.querySelectorAll("option[data-year]")].forEach(o => o.remove());
+    rows.forEach(r => {
+      const o = document.createElement("option");
+      o.value = r.year; o.textContent = r.year; o.dataset.year = "1";
+      sel.appendChild(o);
+    });
+  });
+}
+
+function yr() { return document.getElementById("year-select").value; }
+
+function renderTrend(rows) {
+  if (trendC) trendC.destroy();
+  trendC = lineChart(document.getElementById("trendChart").getContext("2d"),
+    rows.map(r=>r.period), [{label:"Total Cost", data: rows.map(r=>r.total_cost)}]);
+}
+async function loadTrend() {
+  await cachedFetch(`purchasing:trend:${yr()}`, `/api/purchasing/trend?year=${yr()}`, renderTrend);
+}
+
+function renderSuppliers(rows) {
+  if (supplierC) supplierC.destroy();
+  supplierC = barChart(document.getElementById("supplierChart").getContext("2d"),
+    rows.map(r=>r.supplier), rows.map(r=>r.total_spend), null, true);
+  buildTable(rows, document.getElementById("supplier-table"));
+}
+async function loadSuppliers() {
+  await cachedFetch(`purchasing:top-suppliers:${yr()}`, `/api/purchasing/top-suppliers?year=${yr()}`, renderSuppliers);
+}
+
+async function loadProducts() {
+  await cachedFetch("purchasing:top-products", "/api/purchasing/top-products",
+    rows => buildTable(rows, document.getElementById("prod-table")));
+}
+
+async function reloadAll() { await Promise.all([loadTrend(), loadSuppliers()]); }
+
+loadYears().then(() => { reloadAll(); loadProducts(); });
+</script>
+{% endblock %}

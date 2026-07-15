@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+  <div class="page-title">📊 Sales Analytics</div>
+  <div class="page-sub">Revenue, profit and customer performance</div>
+</div>
+
+<div class="filter-bar">
+  <label>Filter by Year:</label>
+  <select class="form-control" id="year-select" onchange="reloadAll()">
+    <option value="All">All Years</option>
+  </select>
+</div>
+
+<div class="card" style="margin-bottom:20px">
+  <div class="card-title">Revenue & Profit Trend</div>
+  <div style="height:240px"><canvas id="trendChart"></canvas></div>
+</div>
+
+<div class="grid-2" style="margin-bottom:20px">
+  <div class="card">
+    <div class="card-title">Top 10 Products by Revenue</div>
+    <div style="height:280px"><canvas id="prodChart"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Top 10 Customers by Revenue</div>
+    <div style="height:280px"><canvas id="custChart"></canvas></div>
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="card-title">Revenue by Category</div>
+    <div style="height:260px"><canvas id="catRevChart"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Profit by Category</div>
+    <div style="height:260px"><canvas id="catProfChart"></canvas></div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+// NOTE: uses cachedFetch() from static/js/main.js — renders the last
+// known data for this page+year immediately on navigation (no empty
+// chart flash), then quietly refreshes with live data in the background.
+// Cache keys include the selected year so switching years never shows
+// stale data from a different filter.
+
+let trendC, prodC, custC, catRevC, catProfC;
+
+async function loadYears() {
+  await cachedFetch("sales:years", "/api/sales/years", rows => {
+    const sel = document.getElementById("year-select");
+    // Avoid duplicating options if this runs twice (cache hit + fresh fetch)
+    [...sel.querySelectorAll("option[data-year]")].forEach(o => o.remove());
+    rows.forEach(r => {
+      const o = document.createElement("option");
+      o.value = r.year; o.textContent = r.year; o.dataset.year = "1";
+      sel.appendChild(o);
+    });
+  });
+}
+
+function yr() { return document.getElementById("year-select").value; }
+function destroyIf(c) { if (c) c.destroy(); }
+
+function renderTrend(rows) {
+  destroyIf(trendC);
+  const ctx = document.getElementById("trendChart").getContext("2d");
+  trendC = lineChart(ctx, rows.map(r=>r.period), [
+    {label:"Revenue", data: rows.map(r=>r.revenue)},
+    {label:"Profit",  data: rows.map(r=>r.profit)},
+  ]);
+}
+async function loadTrend() {
+  await cachedFetch(`sales:trend:${yr()}`, `/api/sales/trend?year=${yr()}`, renderTrend);
+}
+
+function renderProducts(rows) {
+  destroyIf(prodC);
+  const ctx = document.getElementById("prodChart").getContext("2d");
+  prodC = barChart(ctx, rows.map(r=>r.Product), rows.map(r=>r.revenue), null, true);
+}
+async function loadProducts() {
+  await cachedFetch(`sales:top-products:${yr()}`, `/api/sales/top-products?year=${yr()}`, renderProducts);
+}
+
+function renderCustomers(rows) {
+  destroyIf(custC);
+  const ctx = document.getElementById("custChart").getContext("2d");
+  custC = barChart(ctx, rows.map(r=>r.customer), rows.map(r=>r.revenue), null, true);
+}
+async function loadCustomers() {
+  await cachedFetch(`sales:top-customers:${yr()}`, `/api/sales/top-customers?year=${yr()}`, renderCustomers);
+}
+
+function renderCategories(rows) {
+  destroyIf(catRevC); destroyIf(catProfC);
+  catRevC  = doughnutChart(document.getElementById("catRevChart").getContext("2d"),  rows.map(r=>r.Category), rows.map(r=>r.revenue));
+  catProfC = doughnutChart(document.getElementById("catProfChart").getContext("2d"), rows.map(r=>r.Category), rows.map(r=>r.profit));
+}
+async function loadCategories() {
+  await cachedFetch(`sales:by-category:${yr()}`, `/api/sales/by-category?year=${yr()}`, renderCategories);
+}
+
+async function reloadAll() { await Promise.all([loadTrend(), loadProducts(), loadCustomers(), loadCategories()]); }
+
+loadYears().then(reloadAll);
+</script>
+{% endblock %}

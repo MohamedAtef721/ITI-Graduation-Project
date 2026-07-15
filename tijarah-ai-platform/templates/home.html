@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+  <div class="page-title" data-en="Executive Overview" data-ar="نظرة عامة تنفيذية">Executive Overview</div>
+  <div class="page-sub"   data-en="Real-time business intelligence at a glance" data-ar="ذكاء الأعمال في الوقت الفعلي">Real-time business intelligence at a glance</div>
+</div>
+
+<!-- KPI Grid -->
+<div class="kpi-grid" id="kpi-grid">
+  <div class="kpi-card blue">
+    <span class="kpi-icon">💰</span>
+    <div class="kpi-label" data-en="Total Sales" data-ar="إجمالي المبيعات">Total Sales</div>
+    <div class="kpi-value" id="kpi-sales">—</div>
+    <div class="kpi-delta" id="kpi-margin"></div>
+  </div>
+  <div class="kpi-card green">
+    <span class="kpi-icon">📈</span>
+    <div class="kpi-label" data-en="Total Profit" data-ar="إجمالي الأرباح">Total Profit</div>
+    <div class="kpi-value" id="kpi-profit">—</div>
+  </div>
+  <div class="kpi-card purple">
+    <span class="kpi-icon">🛒</span>
+    <div class="kpi-label" data-en="Total Orders" data-ar="إجمالي الطلبات">Total Orders</div>
+    <div class="kpi-value" id="kpi-orders">—</div>
+  </div>
+  <div class="kpi-card orange">
+    <span class="kpi-icon">🚚</span>
+    <div class="kpi-label" data-en="Total Purchases" data-ar="إجمالي المشتريات">Total Purchases</div>
+    <div class="kpi-value" id="kpi-purchases">—</div>
+  </div>
+</div>
+
+<!-- Charts Row -->
+<div class="grid-2">
+  <div class="card">
+    <div class="card-title" data-en="Revenue Trend" data-ar="اتجاه الإيرادات">Revenue Trend</div>
+    <div style="height:220px"><canvas id="trendChart"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-title" data-en="Top Products" data-ar="أفضل المنتجات">Top Products</div>
+    <div style="height:220px"><canvas id="topProdChart"></canvas></div>
+  </div>
+</div>
+
+<!-- Alerts -->
+<div class="section-title" data-en="🔔 Stock Alerts" data-ar="🔔 تنبيهات المخزون">🔔 Stock Alerts</div>
+<div id="alerts-container">
+  <div class="empty-state"><div class="empty-icon">📭</div><p>Loading alerts...</p></div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script>
+// NOTE: this page uses cachedFetch() (defined in static/js/main.js).
+// Since this is a multi-page app, navigating away and back causes a
+// full reload — cachedFetch renders the last-known data from
+// sessionStorage immediately (no "—"/loading flash), then quietly
+// re-fetches fresh data in the background and updates the view.
+
+function renderKPIs(d) {
+  document.getElementById("kpi-sales").textContent     = fmtNum(d.total_sales,  "$");
+  document.getElementById("kpi-profit").textContent    = fmtNum(d.total_profit, "$");
+  document.getElementById("kpi-orders").textContent    = fmtNum(d.total_orders);
+  document.getElementById("kpi-purchases").textContent = fmtNum(d.total_purchases, "$");
+  if (d.profit_margin != null) {
+    const el = document.getElementById("kpi-margin");
+    el.textContent = `Margin: ${d.profit_margin}%`;
+    el.className   = "kpi-delta delta-up";
+  }
+}
+async function loadKPIs() {
+  await cachedFetch("home:kpis", "/api/kpis", renderKPIs);
+}
+
+let trendChartInstance = null;
+function renderTrend(rows) {
+  const ctx = document.getElementById("trendChart").getContext("2d");
+  if (trendChartInstance) trendChartInstance.destroy();
+  trendChartInstance = lineChart(ctx, rows.map(r=>r.period), [{label:"Revenue", data: rows.map(r=>r.revenue)}]);
+}
+async function loadTrend() {
+  await cachedFetch("home:trend", "/api/home/trend", renderTrend);
+}
+
+let topProdChartInstance = null;
+function renderTopProducts(rows) {
+  const ctx = document.getElementById("topProdChart").getContext("2d");
+  if (topProdChartInstance) topProdChartInstance.destroy();
+  topProdChartInstance = barChart(ctx, rows.map(r=>r.Product), rows.map(r=>r.revenue), null, true);
+}
+async function loadTopProducts() {
+  await cachedFetch("home:top-products", "/api/home/top-products", renderTopProducts);
+}
+
+function renderAlerts(rows) {
+  const el = document.getElementById("alerts-container");
+  if (!rows.length) {
+    el.innerHTML = '<div class="alert alert-low"><div><div class="alert-title">✅ All stock levels are healthy</div><div class="alert-body">No products below reorder level.</div></div></div>';
+    return;
+  }
+  el.innerHTML = rows.map(r => `
+    <div class="alert alert-high">
+      <span style="font-size:20px">🔴</span>
+      <div>
+        <div class="alert-title">${r.Product}</div>
+        <div class="alert-body">Stock: ${r.CurrentStock} units | Reorder Level: ${r.ReorderLevel} units | Deficit: ${r.deficit}</div>
+      </div>
+    </div>
+  `).join("");
+}
+async function loadAlerts() {
+  await cachedFetch("home:alerts", "/api/home/alerts", renderAlerts);
+}
+
+loadKPIs();
+loadTrend();
+loadTopProducts();
+loadAlerts();
+</script>
+{% endblock %}

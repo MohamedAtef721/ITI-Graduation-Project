@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIJARAH — Smart Inventory Copilot</title>
+<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=3">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.45.0/dist/apexcharts.min.js"></script>
+</head>
+<body>
+
+<!-- ── Sidebar ── -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div>
+      <img class="brand-logo" id="brand-logo-img" src="{{ url_for('static', filename='images/logo-full-light.png') }}" alt="TIJARAH">
+      <div class="brand-sub">Smart Inventory Copilot</div>
+    </div>
+  </div>
+
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btn-en" onclick="setLang('en')">🇺🇸 EN</button>
+    <button class="lang-btn"        id="btn-ar" onclick="setLang('ar')">🇸🇦 AR</button>
+  </div>
+
+  <div class="lang-toggle" id="theme-toggle">
+    <button class="lang-btn active" id="btn-theme-dark"  onclick="setTheme('dark')"  title="Dark">🌙</button>
+    <button class="lang-btn"        id="btn-theme-light" onclick="setTheme('light')" title="Light">☀️</button>
+  </div>
+
+  <nav class="nav-menu">
+    <a href="/"            class="nav-item {% if request.path == '/' %}active{% endif %}">
+      <span class="nav-icon">🏠</span><span class="nav-label" data-en="Home" data-ar="الرئيسية">Home</span>
+    </a>
+    <a href="/sales"       class="nav-item {% if request.path == '/sales' %}active{% endif %}">
+      <span class="nav-icon">📊</span><span class="nav-label" data-en="Sales Analytics" data-ar="تحليل المبيعات">Sales Analytics</span>
+    </a>
+    <a href="/inventory"   class="nav-item {% if request.path == '/inventory' %}active{% endif %}">
+      <span class="nav-icon">🏭</span><span class="nav-label" data-en="Inventory" data-ar="المخزون">Inventory</span>
+    </a>
+    <a href="/purchasing"  class="nav-item {% if request.path == '/purchasing' %}active{% endif %}">
+      <span class="nav-icon">🚚</span><span class="nav-label" data-en="Purchasing" data-ar="المشتريات">Purchasing</span>
+    </a>
+    <a href="/ai-advisor"  class="nav-item {% if request.path == '/ai-advisor' %}active{% endif %}">
+      <span class="nav-icon">🤖</span><span class="nav-label" data-en="AI Advisor" data-ar="المستشار الذكي">AI Advisor</span>
+    </a>
+    <a href="/forecasting" class="nav-item {% if request.path == '/forecasting' %}active{% endif %}">
+      <span class="nav-icon">📈</span><span class="nav-label" data-en="Forecasting" data-ar="التوقعات">Forecasting</span>
+    </a>
+    <a href="/report"      class="nav-item {% if request.path == '/report' %}active{% endif %}">
+      <span class="nav-icon">📋</span><span class="nav-label" data-en="Monthly Report" data-ar="التقرير الشهري">Monthly Report</span>
+    </a>
+    <a href="/settings"    class="nav-item {% if request.path == '/settings' %}active{% endif %}">
+      <span class="nav-icon">⚙️</span><span class="nav-label" data-en="Settings" data-ar="الإعدادات">Settings</span>
+    </a>
+  </nav>
+
+  <div class="conn-status" id="conn-status">
+    <span class="conn-dot" id="conn-dot">●</span>
+    <span id="conn-text">Checking...</span>
+  </div>
+</aside>
+
+<!-- ── Main Content ── -->
+<main class="main-content" id="main-content">
+  {% block content %}{% endblock %}
+</main>
+
+<script src="{{ url_for('static', filename='js/main.js') }}?v=2"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

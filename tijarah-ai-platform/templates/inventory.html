@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+  <div class="page-title">🏭 Inventory Intelligence</div>
+  <div class="page-sub">Stock levels, alerts and inventory value</div>
+</div>
+
+<div class="grid-2" style="margin-bottom:20px">
+  <div class="card">
+    <div class="card-title">🔴 Low Stock Products (Stock ≤ Reorder Level)</div>
+    <div id="low-stock-table"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">🟠 Overstock Alerts (Stock > Target)</div>
+    <div id="overstock-table"></div>
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="card-title">💰 Inventory Value by Category</div>
+    <div style="height:280px"><canvas id="invValChart"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Inventory Value Table</div>
+    <div id="inv-val-table"></div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+// Uses cachedFetch() from static/js/main.js — renders last-known data
+// instantly on navigation, then refreshes quietly in the background.
+
+async function loadLowStock() {
+  await cachedFetch("inventory:low-stock", "/api/inventory/low-stock",
+    rows => buildTable(rows, document.getElementById("low-stock-table")));
+}
+async function loadOverstock() {
+  await cachedFetch("inventory:overstock", "/api/inventory/overstock",
+    rows => buildTable(rows, document.getElementById("overstock-table")));
+}
+
+let invValChartInstance = null;
+async function loadInvValue() {
+  await cachedFetch("inventory:value-by-category", "/api/inventory/value-by-category", rows => {
+    if (invValChartInstance) invValChartInstance.destroy();
+    invValChartInstance = doughnutChart(document.getElementById("invValChart").getContext("2d"),
+      rows.map(r=>r.Category), rows.map(r=>r.inv_value));
+    buildTable(rows, document.getElementById("inv-val-table"));
+  });
+}
+
+loadLowStock(); loadOverstock(); loadInvValue();
+</script>
+{% endblock %}

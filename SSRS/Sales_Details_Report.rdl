@@ -1,0 +1,1233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily" xmlns:am="http://schemas.microsoft.com/sqlserver/reporting/authoringmetadata">
+  <am:AuthoringMetadata>
+    <am:CreatedBy>
+      <am:Name>SSDTRS</am:Name>
+      <am:Version>18.7.11911.148</am:Version>
+    </am:CreatedBy>
+    <am:UpdatedBy>
+      <am:Name>SSDTRS</am:Name>
+      <am:Version>18.7.11925.98</am:Version>
+    </am:UpdatedBy>
+    <am:LastModifiedTimestamp>2026-07-05T22:32:27.3594158Z</am:LastModifiedTimestamp>
+  </am:AuthoringMetadata>
+  <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource1">
+      <DataSourceReference>DataSource1</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>3cfae38d-761f-4ed1-8e65-467e4334356b</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet1">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="Param_Year">
+            <Value>=Parameters!Param_Year.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+          <QueryParameter Name="Param_Month">
+            <Value>=Parameters!Param_Month.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+          <QueryParameter Name="Param_Customer">
+            <Value>=Parameters!Param_Customer.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT 
+NON EMPTY { [Measures].[Total_Revenue], [Measures].[Total_Profit], [Measures].[Unit Price], [Measures].[Quantity], [Measures].[Profit Amount], [Measures].[Avg_Revenue_Per_Invoice], [Measures].[Profit_Margin_Percentage] } ON COLUMNS, 
+NON EMPTY { 
+    ( [Dim Customer].[Customer Name].[Customer Name].ALLMEMBERS * [Dim Date].[Month Number].[Month Number].ALLMEMBERS * [Dim Delivery Method].[Delivery Method].[Delivery Method].ALLMEMBERS * [Dim Employee].[Full Name].[Full Name].ALLMEMBERS * [Dim Location].[City].[City].ALLMEMBERS * [Dim Product].[Product].[Product].ALLMEMBERS * [Dim Product].[Category].[Category].ALLMEMBERS ) 
+} DIMENSION PROPERTIES MEMBER_CAPTION, MEMBER_VALUE, MEMBER_UNIQUE_NAME ON ROWS 
+FROM [Sales_cubes]
+WHERE (StrToSet(@Param_Year),StrToSet(@Param_Month),StrToSet(@Param_Customer))</CommandText>
+        <rd:DesignerState>
+          <QueryDefinition xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/AnalysisServices/QueryDefinition">
+            <CommandType>MDX</CommandType>
+            <QuerySpecification xsi:type="MDXQuerySpecification">
+              <Select>
+                <Items>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Dim Customer</DimensionName>
+                      <HierarchyName>Customer Category</HierarchyName>
+                      <HierarchyUniqueName>[Dim Customer].[Customer Category]</HierarchyUniqueName>
+                      <LevelName>Customer Category</LevelName>
+                      <UniqueName>[Dim Customer].[Customer Category].[Customer Category]</UniqueName>
+                    </ID>
+                    <ItemCaption>Customer Category</ItemCaption>
+                    <UniqueName>true</UniqueName>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Dim Customer</DimensionName>
+                      <HierarchyName>Customer Name</HierarchyName>
+                      <HierarchyUniqueName>[Dim Customer].[Customer Name]</HierarchyUniqueName>
+                      <LevelName>Customer Name</LevelName>
+                      <UniqueName>[Dim Customer].[Customer Name].[Customer Name]</UniqueName>
+                    </ID>
+                    <ItemCaption>Customer Name</ItemCaption>
+                    <UniqueName>true</UniqueName>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Dim Date</DimensionName>
+                      <HierarchyName>Month Name</HierarchyName>
+                      <HierarchyUniqueName>[Dim Date].[Month Name]</HierarchyUniqueName>
+                      <LevelName>Month Name</LevelName>
+                      <UniqueName>[Dim Date].[Month Name].[Month Name]</UniqueName>
+                    </ID>
+                    <ItemCaption>Month Name</ItemCaption>
+                    <UniqueName>true</UniqueName>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Dim Date</DimensionName>
+                      <HierarchyName>Year Number</HierarchyName>
+                      <HierarchyUniqueName>[Dim Date].[Year Number]</HierarchyUniqueName>
+                      <LevelName>Year Number</LevelName>
+                      <UniqueName>[Dim Date].[Year Number].[Year Number]</UniqueName>
+                    </ID>
+                    <ItemCaption>Year Number</ItemCaption>
+                    <UniqueName>true</UniqueName>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Dim Delivery Method</DimensionName>
+                      <HierarchyName>Delivery Method</HierarchyName>
+                      <HierarchyUniqueName>[Dim Delivery Method].[Delivery Method]</HierarchyUniqueName>
+                      <LevelName>Delivery Method</LevelName>
+                      <UniqueName>[Dim Delivery Method].[Delivery Method].[Delivery Method]</UniqueName>
+                    </ID>
+                    <ItemCaption>Delivery Method</ItemCaption>
+                    <UniqueName>true</UniqueName>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Dim Employee</DimensionName>
+                      <HierarchyName>Full Name</HierarchyName>
+                      <HierarchyUniqueName>[Dim Employee].[Full Name]</HierarchyUniqueName>
+                      <LevelName>Full Name</LevelName>
+                      <UniqueName>[Dim Employee].[Full Name].[Full Name]</UniqueName>
+                    </ID>
+                    <ItemCaption>Full Name</ItemCaption>
+                    <UniqueName>true</UniqueName>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Dim Location</DimensionName>
+                      <HierarchyName>City</HierarchyName>
+                      <HierarchyUniqueName>[Dim Location].[City]</HierarchyUniqueName>
+                      <LevelName>City</LevelName>
+                      <UniqueName>[Dim Location].[City].[City]</UniqueName>
+                    </ID>
+                    <ItemCaption>City</ItemCaption>
+                    <UniqueName>true</UniqueName>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Dim Product</DimensionName>
+                      <HierarchyName>Product</HierarchyName>
+                      <HierarchyUniqueName>[Dim Product].[Product]</HierarchyUniqueName>
+                      <LevelName>Product</LevelName>
+                      <UniqueName>[Dim Product].[Product].[Product]</UniqueName>
+                    </ID>
+                    <ItemCaption>Product</ItemCaption>
+                    <UniqueName>true</UniqueName>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Dim Product</DimensionName>
+                      <HierarchyName>Category</HierarchyName>
+                      <HierarchyUniqueName>[Dim Product].[Category]</HierarchyUniqueName>
+                      <LevelName>Category</LevelName>
+                      <UniqueName>[Dim Product].[Category].[Category]</UniqueName>
+                    </ID>
+                    <ItemCaption>Category</ItemCaption>
+                    <UniqueName>true</UniqueName>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Measure">
+                      <MeasureName>Total_Revenue</MeasureName>
+                      <UniqueName>[Measures].[Total_Revenue]</UniqueName>
+                    </ID>
+                    <ItemCaption>Total_Revenue</ItemCaption>
+                    <BackColor>true</BackColor>
+                    <ForeColor>true</ForeColor>
+                    <FontFamily>true</FontFamily>
+                    <FontSize>true</FontSize>
+                    <FontWeight>true</FontWeight>
+                    <FontStyle>true</FontStyle>
+                    <FontDecoration>true</FontDecoration>
+                    <FormattedValue>true</FormattedValue>
+                    <FormatString>true</FormatString>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Measure">
+                      <MeasureName>Total_Profit</MeasureName>
+                      <UniqueName>[Measures].[Total_Profit]</UniqueName>
+                    </ID>
+                    <ItemCaption>Total_Profit</ItemCaption>
+                    <BackColor>true</BackColor>
+                    <ForeColor>true</ForeColor>
+                    <FontFamily>true</FontFamily>
+                    <FontSize>true</FontSize>
+                    <FontWeight>true</FontWeight>
+                    <FontStyle>true</FontStyle>
+                    <FontDecoration>true</FontDecoration>
+                    <FormattedValue>true</FormattedValue>
+                    <FormatString>true</FormatString>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Measure">
+                      <MeasureName>Unit Price</MeasureName>
+                      <UniqueName>[Measures].[Unit Price]</UniqueName>
+                    </ID>
+                    <ItemCaption>Unit Price</ItemCaption>
+                    <BackColor>true</BackColor>
+                    <ForeColor>true</ForeColor>
+                    <FontFamily>true</FontFamily>
+                    <FontSize>true</FontSize>
+                    <FontWeight>true</FontWeight>
+                    <FontStyle>true</FontStyle>
+                    <FontDecoration>true</FontDecoration>
+                    <FormattedValue>true</FormattedValue>
+                    <FormatString>true</FormatString>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Measure">
+                      <MeasureName>Quantity</MeasureName>
+                      <UniqueName>[Measures].[Quantity]</UniqueName>
+                    </ID>
+                    <ItemCaption>Quantity</ItemCaption>
+                    <BackColor>true</BackColor>
+                    <ForeColor>true</ForeColor>
+                    <FontFamily>true</FontFamily>
+                    <FontSize>true</FontSize>
+                    <FontWeight>true</FontWeight>
+                    <FontStyle>true</FontStyle>
+                    <FontDecoration>true</FontDecoration>
+                    <FormattedValue>true</FormattedValue>
+                    <FormatString>true</FormatString>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Measure">
+                      <MeasureName>Profit Amount</MeasureName>
+                      <UniqueName>[Measures].[Profit Amount]</UniqueName>
+                    </ID>
+                    <ItemCaption>Profit Amount</ItemCaption>
+                    <BackColor>true</BackColor>
+                    <ForeColor>true</ForeColor>
+                    <FontFamily>true</FontFamily>
+                    <FontSize>true</FontSize>
+                    <FontWeight>true</FontWeight>
+                    <FontStyle>true</FontStyle>
+                    <FontDecoration>true</FontDecoration>
+                    <FormattedValue>true</FormattedValue>
+                    <FormatString>true</FormatString>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Measure">
+                      <MeasureName>Avg_Revenue_Per_Invoice</MeasureName>
+                      <UniqueName>[Measures].[Avg_Revenue_Per_Invoice]</UniqueName>
+                    </ID>
+                    <ItemCaption>Avg_Revenue_Per_Invoice</ItemCaption>
+                    <BackColor>true</BackColor>
+                    <ForeColor>true</ForeColor>
+                    <FontFamily>true</FontFamily>
+                    <FontSize>true</FontSize>
+                    <FontWeight>true</FontWeight>
+                    <FontStyle>true</FontStyle>
+                    <FontDecoration>true</FontDecoration>
+                    <FormattedValue>true</FormattedValue>
+                    <FormatString>true</FormatString>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Measure">
+                      <MeasureName>Profit_Margin_Percentage</MeasureName>
+                      <UniqueName>[Measures].[Profit_Margin_Percentage]</UniqueName>
+                    </ID>
+                    <ItemCaption>Profit_Margin_Percentage</ItemCaption>
+                    <BackColor>true</BackColor>
+                    <ForeColor>true</ForeColor>
+                    <FontFamily>true</FontFamily>
+                    <FontSize>true</FontSize>
+                    <FontWeight>true</FontWeight>
+                    <FontStyle>true</FontStyle>
+                    <FontDecoration>true</FontDecoration>
+                    <FormattedValue>true</FormattedValue>
+                    <FormatString>true</FormatString>
+                  </Item>
+                </Items>
+              </Select>
+              <AutoExecute>false</AutoExecute>
+              <From>Sales_cubes</From>
+              <Filter>
+                <FilterItems />
+              </Filter>
+              <Calculations />
+              <Aggregates />
+              <QueryProperties>
+                <IncludeMemberValue>true</IncludeMemberValue>
+              </QueryProperties>
+            </QuerySpecification>
+            <Query>
+              <Statement> SELECT NON EMPTY { [Measures].[Total_Revenue], [Measures].[Total_Profit], [Measures].[Unit Price], [Measures].[Quantity], [Measures].[Profit Amount], [Measures].[Avg_Revenue_Per_Invoice], [Measures].[Profit_Margin_Percentage] } ON COLUMNS, NON EMPTY { ([Dim Customer].[Customer Category].[Customer Category].ALLMEMBERS * [Dim Customer].[Customer Name].[Customer Name].ALLMEMBERS * [Dim Date].[Month Name].[Month Name].ALLMEMBERS * [Dim Date].[Year Number].[Year Number].ALLMEMBERS * [Dim Delivery Method].[Delivery Method].[Delivery Method].ALLMEMBERS * [Dim Employee].[Full Name].[Full Name].ALLMEMBERS * [Dim Location].[City].[City].ALLMEMBERS * [Dim Product].[Product].[Product].ALLMEMBERS * [Dim Product].[Category].[Category].ALLMEMBERS ) } DIMENSION PROPERTIES MEMBER_CAPTION, MEMBER_VALUE, MEMBER_UNIQUE_NAME ON ROWS FROM [Sales_cubes] CELL PROPERTIES VALUE, BACK_COLOR, FORE_COLOR, FORMATTED_VALUE, FORMAT_STRING, FONT_NAME, FONT_SIZE, FONT_FLAGS</Statement>
+              <ParameterDefinitions />
+            </Query>
+          </QueryDefinition>
+        </rd:DesignerState>
+      </Query>
+      <Fields>
+        <Field Name="Customer_Category">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Level" UniqueName="[Dim Customer].[Customer Category].[Customer Category]" /&gt;</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Customer_Name">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Level" UniqueName="[Dim Customer].[Customer Name].[Customer Name]" /&gt;</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Month_Name">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Level" UniqueName="[Dim Date].[Month Name].[Month Name]" /&gt;</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Year_Number">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Level" UniqueName="[Dim Date].[Year Number].[Year Number]" /&gt;</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Delivery_Method">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Level" UniqueName="[Dim Delivery Method].[Delivery Method].[Delivery Method]" /&gt;</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Full_Name">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Level" UniqueName="[Dim Employee].[Full Name].[Full Name]" /&gt;</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="City">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Level" UniqueName="[Dim Location].[City].[City]" /&gt;</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Product">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Level" UniqueName="[Dim Product].[Product].[Product]" /&gt;</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Category">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Level" UniqueName="[Dim Product].[Category].[Category]" /&gt;</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Total_Revenue">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Measure" UniqueName="[Measures].[Total_Revenue]" /&gt;</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Total_Profit">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Measure" UniqueName="[Measures].[Total_Profit]" /&gt;</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Unit_Price">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Measure" UniqueName="[Measures].[Unit Price]" /&gt;</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Quantity">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Measure" UniqueName="[Measures].[Quantity]" /&gt;</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Profit_Amount">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Measure" UniqueName="[Measures].[Profit Amount]" /&gt;</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Avg_Revenue_Per_Invoice">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Measure" UniqueName="[Measures].[Avg_Revenue_Per_Invoice]" /&gt;</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Profit_Margin_Percentage">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Measure" UniqueName="[Measures].[Profit_Margin_Percentage]" /&gt;</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="DS_Year">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <CommandText>WITH MEMBER [Measures].[YearUniqueName] AS 
+     [Dim Date].[Year Number].CurrentMember.UniqueName
+SELECT 
+     { [Measures].[YearUniqueName] } ON COLUMNS,
+     [Dim Date].[Year Number].[Year Number].MEMBERS ON ROWS
+FROM [Sales_cubes]</CommandText>
+        <rd:DesignerState>
+          <QueryDefinition xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/AnalysisServices/QueryDefinition">
+            <CommandType>MDX</CommandType>
+            <Type>Query</Type>
+            <QuerySpecification xsi:type="MDXQuerySpecification">
+              <Select>
+                <Items>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Dim Date</DimensionName>
+                      <HierarchyName>Year Number</HierarchyName>
+                      <HierarchyUniqueName>[Dim Date].[Year Number]</HierarchyUniqueName>
+                      <LevelName>Year Number</LevelName>
+                      <UniqueName>[Dim Date].[Year Number].[Year Number]</UniqueName>
+                    </ID>
+                    <ItemCaption>Year Number</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Measure">
+                      <MeasureName>YearUniqueName</MeasureName>
+                      <UniqueName>[Measures].[YearUniqueName]</UniqueName>
+                    </ID>
+                    <ItemCaption>YearUniqueName</ItemCaption>
+                    <FormattedValue>true</FormattedValue>
+                  </Item>
+                </Items>
+              </Select>
+              <AutoExecute>false</AutoExecute>
+              <From>Sales_cubes</From>
+              <Filter>
+                <FilterItems />
+              </Filter>
+              <Calculations />
+              <Aggregates />
+              <QueryProperties />
+            </QuerySpecification>
+            <Query>
+              <Statement>WITH MEMBER [Measures].[YearUniqueName] AS 
+     [Dim Date].[Year Number].CurrentMember.UniqueName
+SELECT 
+     { [Measures].[YearUniqueName] } ON COLUMNS,
+     [Dim Date].[Year Number].[Year Number].MEMBERS ON ROWS
+FROM [Sales_cubes]</Statement>
+              <ParameterDefinitions />
+            </Query>
+          </QueryDefinition>
+        </rd:DesignerState>
+      </Query>
+      <Fields>
+        <Field Name="Year_Number">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Level" UniqueName="[Dim Date].[Year Number].[Year Number]" /&gt;</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="YearUniqueName">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Measure" UniqueName="[Measures].[YearUniqueName]" /&gt;</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="DS_Month">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="Param_Year">
+            <Value>=Parameters!Param_Year.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>WITH MEMBER [Measures].[MonthUniqueName] AS 
+     [Dim Date].[Month Name].CurrentMember.UniqueName
+SELECT 
+     { [Measures].[MonthUniqueName] } ON COLUMNS,
+     NON EMPTY [Dim Date].[Month Name].[Month Name].MEMBERS ON ROWS
+FROM [Sales_cubes]</CommandText>
+        <rd:DesignerState>
+          <QueryDefinition xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/AnalysisServices/QueryDefinition">
+            <CommandType>MDX</CommandType>
+            <Type>Query</Type>
+            <QuerySpecification xsi:type="MDXQuerySpecification">
+              <Select>
+                <Items>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Dim Date</DimensionName>
+                      <HierarchyName>Month Name</HierarchyName>
+                      <HierarchyUniqueName>[Dim Date].[Month Name]</HierarchyUniqueName>
+                      <LevelName>Month Name</LevelName>
+                      <UniqueName>[Dim Date].[Month Name].[Month Name]</UniqueName>
+                    </ID>
+                    <ItemCaption>Month Name</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Measure">
+                      <MeasureName>MonthUniqueName</MeasureName>
+                      <UniqueName>[Measures].[MonthUniqueName]</UniqueName>
+                    </ID>
+                    <ItemCaption>MonthUniqueName</ItemCaption>
+                    <FormattedValue>true</FormattedValue>
+                  </Item>
+                </Items>
+              </Select>
+              <AutoExecute>false</AutoExecute>
+              <From>Sales_cubes</From>
+              <Filter>
+                <FilterItems />
+              </Filter>
+              <Calculations />
+              <Aggregates />
+              <QueryProperties />
+            </QuerySpecification>
+            <Query>
+              <Statement>WITH MEMBER [Measures].[MonthUniqueName] AS 
+     [Dim Date].[Month Name].CurrentMember.UniqueName
+SELECT 
+     { [Measures].[MonthUniqueName] } ON COLUMNS,
+     NON EMPTY [Dim Date].[Month Name].[Month Name].MEMBERS ON ROWS
+FROM [Sales_cubes]
+</Statement>
+              <ParameterDefinitions />
+            </Query>
+          </QueryDefinition>
+        </rd:DesignerState>
+      </Query>
+      <Fields>
+        <Field Name="Month_Name">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Level" UniqueName="[Dim Date].[Month Name].[Month Name]" /&gt;</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MonthUniqueName">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Measure" UniqueName="[Measures].[MonthUniqueName]" /&gt;</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="DS_Customer_Category">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <CommandText>WITH MEMBER [Measures].[CatUniqueName] AS 
+     [Dim Customer].[Customer Category].CurrentMember.UniqueName
+SELECT 
+     { [Measures].[CatUniqueName] } ON COLUMNS,
+     [Dim Customer].[Customer Category].[Customer Category].MEMBERS ON ROWS
+FROM [Sales_cubes]</CommandText>
+        <rd:DesignerState>
+          <QueryDefinition xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/AnalysisServices/QueryDefinition">
+            <CommandType>MDX</CommandType>
+            <Type>Query</Type>
+            <QuerySpecification xsi:type="MDXQuerySpecification">
+              <Select>
+                <Items>
+                  <Item>
+                    <ID xsi:type="Level">
+                      <DimensionName>Dim Customer</DimensionName>
+                      <HierarchyName>Customer Category</HierarchyName>
+                      <HierarchyUniqueName>[Dim Customer].[Customer Category]</HierarchyUniqueName>
+                      <LevelName>Customer Category</LevelName>
+                      <UniqueName>[Dim Customer].[Customer Category].[Customer Category]</UniqueName>
+                    </ID>
+                    <ItemCaption>Customer Category</ItemCaption>
+                  </Item>
+                  <Item>
+                    <ID xsi:type="Measure">
+                      <MeasureName>CatUniqueName</MeasureName>
+                      <UniqueName>[Measures].[CatUniqueName]</UniqueName>
+                    </ID>
+                    <ItemCaption>CatUniqueName</ItemCaption>
+                    <FormattedValue>true</FormattedValue>
+                  </Item>
+                </Items>
+              </Select>
+              <AutoExecute>false</AutoExecute>
+              <From>Sales_cubes</From>
+              <Filter>
+                <FilterItems />
+              </Filter>
+              <Calculations />
+              <Aggregates />
+              <QueryProperties />
+            </QuerySpecification>
+            <Query>
+              <Statement>WITH MEMBER [Measures].[CatUniqueName] AS 
+     [Dim Customer].[Customer Category].CurrentMember.UniqueName
+SELECT 
+     { [Measures].[CatUniqueName] } ON COLUMNS,
+     [Dim Customer].[Customer Category].[Customer Category].MEMBERS ON ROWS
+FROM [Sales_cubes]</Statement>
+              <ParameterDefinitions />
+            </Query>
+          </QueryDefinition>
+        </rd:DesignerState>
+      </Query>
+      <Fields>
+        <Field Name="Customer_Category">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Level" UniqueName="[Dim Customer].[Customer Category].[Customer Category]" /&gt;</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CatUniqueName">
+          <DataField>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Measure" UniqueName="[Measures].[CatUniqueName]" /&gt;</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Textbox Name="textbox1">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value> Sales Details Report</Value>
+                    <Style>
+                      <FontFamily>Segoe UI Light</FontFamily>
+                      <FontSize>24pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>textbox1</rd:DefaultName>
+            <Top>0.13333in</Top>
+            <Left>2.10554in</Left>
+            <Height>0.57in</Height>
+            <Width>5.75167in</Width>
+            <Style>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox12">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>="Selected Filters: Year: " &amp; Join(Parameters!Param_Year.Label, ", ") &amp; " | Month: " &amp; Join(Parameters!Param_Month.Label, ", ") &amp; " | Category: " &amp; Join(Parameters!Param_Customer.Label, ", ")</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox12</rd:DefaultName>
+            <Top>1.17278in</Top>
+            <Left>2.74832in</Left>
+            <Height>0.25in</Height>
+            <Width>6.91998in</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Tablix Name="Tablix4">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>9.49498in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.64722in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Rectangle Name="Rectangle4">
+                          <ReportItems>
+                            <Textbox Name="Customer_Name">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!Customer_Name.Value</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Customer_Name</rd:DefaultName>
+                              <Top>0.1in</Top>
+                              <Left>0.15502in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1in</Width>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Product">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!Product.Value</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Product</rd:DefaultName>
+                              <Top>0.1in</Top>
+                              <Left>1.70555in</Left>
+                              <Height>0.475in</Height>
+                              <Width>1.45in</Width>
+                              <ZIndex>1</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="City">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!City.Value</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>City</rd:DefaultName>
+                              <Top>0.1in</Top>
+                              <Left>3.74335in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1in</Width>
+                              <ZIndex>2</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Full_Name">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!Full_Name.Value</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Full_Name</rd:DefaultName>
+                              <Top>0.1in</Top>
+                              <Left>5.355in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1in</Width>
+                              <ZIndex>3</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Total_Revenue">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!Total_Revenue.Value</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Total_Revenue</rd:DefaultName>
+                              <Top>0.1in</Top>
+                              <Left>6.76334in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1in</Width>
+                              <ZIndex>4</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Total_Profit">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!Total_Profit.Value</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Total_Profit</rd:DefaultName>
+                              <Top>0.1in</Top>
+                              <Left>8.22831in</Left>
+                              <Height>0.25in</Height>
+                              <Width>0.9in</Width>
+                              <ZIndex>5</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </ReportItems>
+                          <KeepTogether>true</KeepTogether>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>=IIf(RowNumber(Nothing) Mod 2 = 0, "white", "linen")</BackgroundColor>
+                          </Style>
+                        </Rectangle>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="Details" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>DataSet1</DataSetName>
+            <Top>2.40166in</Top>
+            <Left>0.17332in</Left>
+            <Height>0.64722in</Height>
+            <Width>9.49498in</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+          <Textbox Name="Textbox22">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Customer Name</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox22</rd:DefaultName>
+            <Top>1.88499in</Top>
+            <Left>0.36667in</Left>
+            <Height>0.25in</Height>
+            <Width>1.3in</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox23">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>SalesMan</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox22</rd:DefaultName>
+            <Top>1.88499in</Top>
+            <Left>5.42832in</Left>
+            <Height>0.25in</Height>
+            <Width>1in</Width>
+            <ZIndex>4</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox24">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>City</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox22</rd:DefaultName>
+            <Top>1.88499in</Top>
+            <Left>3.91667in</Left>
+            <Height>0.25in</Height>
+            <Width>1in</Width>
+            <ZIndex>5</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox25">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Product</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox22</rd:DefaultName>
+            <Top>1.88499in</Top>
+            <Left>2.02887in</Left>
+            <Height>0.25in</Height>
+            <Width>1in</Width>
+            <ZIndex>6</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox26">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Total Revenue</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox22</rd:DefaultName>
+            <Top>1.88499in</Top>
+            <Left>6.93665in</Left>
+            <Height>0.25in</Height>
+            <Width>1in</Width>
+            <ZIndex>7</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox27">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Total Profit</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox22</rd:DefaultName>
+            <Top>1.88499in</Top>
+            <Left>8.40163in</Left>
+            <Height>0.25in</Height>
+            <Width>1in</Width>
+            <ZIndex>8</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox28">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Back To Sales Overview</Value>
+                    <Style>
+                      <TextDecoration>Underline</TextDecoration>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox28</rd:DefaultName>
+            <ActionInfo>
+              <Actions>
+                <Action>
+                  <Drillthrough>
+                    <ReportName>Sales_report</ReportName>
+                  </Drillthrough>
+                </Action>
+              </Actions>
+            </ActionInfo>
+            <Top>1.17278in</Top>
+            <Left>0.17332in</Left>
+            <Height>0.39167in</Height>
+            <Width>1.85833in</Width>
+            <ZIndex>9</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Line Name="Line1">
+            <Top>2.30611in</Top>
+            <Left>0.17332in</Left>
+            <Height>0in</Height>
+            <Width>9.53332in</Width>
+            <ZIndex>10</ZIndex>
+            <Style>
+              <Border>
+                <Color>Maroon</Color>
+                <Style>Solid</Style>
+                <Width>3pt</Width>
+              </Border>
+            </Style>
+          </Line>
+          <Image Name="Image1">
+            <Source>Embedded</Source>
+            <Value>photo_20260706_012854</Value>
+            <Sizing>FitProportional</Sizing>
+            <Top>0.20333in</Top>
+            <Left>0.24999in</Left>
+            <Height>0.5in</Height>
+            <Width>1.60502in</Width>
+            <ZIndex>11</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Image>
+        </ReportItems>
+        <Height>6.02889in</Height>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <BackgroundColor>Linen</BackgroundColor>
+        </Style>
+      </Body>
+      <Width>10in</Width>
+      <Page>
+        <LeftMargin>1in</LeftMargin>
+        <RightMargin>1in</RightMargin>
+        <TopMargin>1in</TopMargin>
+        <BottomMargin>1in</BottomMargin>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="Param_Year">
+      <DataType>String</DataType>
+      <Prompt>Year</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>DS_Year</DataSetName>
+          <ValueField>YearUniqueName</ValueField>
+          <LabelField>Year_Number</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="Param_Month">
+      <DataType>String</DataType>
+      <Prompt>Month</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>DS_Month</DataSetName>
+          <ValueField>MonthUniqueName</ValueField>
+          <LabelField>Month_Name</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="Param_Customer">
+      <DataType>String</DataType>
+      <Prompt>Customer Category</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>DS_Customer_Category</DataSetName>
+          <ValueField>CatUniqueName</ValueField>
+          <LabelField>Customer_Category</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+  </ReportParameters>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>Param_Year</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>Param_Month</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>Param_Customer</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <EmbeddedImages>
+    <EmbeddedImage Name="photo_20260706_012854">
+      <MIMEType>image/jpeg</MIMEType>
+      <ImageData>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</ImageData>
+    </EmbeddedImage>
+  </EmbeddedImages>
+  <Language>en-US</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>6f27346a-c77b-4ca6-afaf-7bf3e4b16aa7</rd:ReportID>
+</Report>
