@@ -358,7 +358,7 @@ Sends the formatted alert message to the designated Telegram channel, notifying 
 | AI Provider | Student Bedrock Gateway (multi-model: Anthropic Claude, DeepSeek, Meta Llama, GPT-OSS) |
 | ML Forecasting | Prophet (Meta) · Pandas |
 | Web Framework | Python Flask |
-| Frontend | HTML5 · CSS3 · JavaScript  · Chart.js |
+| Frontend | HTML5 · CSS3 · JavaScript (Vanilla) · Chart.js |
 | Scheduling | APScheduler |
 | Report Generation | ReportLab (PDF) |
 | Email Delivery | Gmail SMTP · Python smtplib |
@@ -374,25 +374,25 @@ Sends the formatted alert message to the designated Telegram channel, notifying 
   <tr>
     <td align="center">
       <a href="https://github.com/MohamedAtef721">
-        <img src="images/Mohamed Atef.jpeg width="100" style="border-radius: 50%"><br>
+        <img src="https://avatars.githubusercontent.com/MohamedAtef721" width="100" style="border-radius: 50%"><br>
         <sub><a href="https://www.linkedin.com/in/mohamed-atef22/">Mohamed Atef</a></sub>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/abdelrahmanashraf796-jpg">
-        <img src="images/Abdelrahman Ashraf.jpeg" width="100" style="border-radius: 50%"><br>
+        <img src="https://avatars.githubusercontent.com/abdelrahmanashraf796-jpg" width="100" style="border-radius: 50%"><br>
         <sub><a href="https://www.linkedin.com/in/abdelrahman-ashraf-07b18b31a/">Abdelrahman Ashraf</a></sub>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/aliaasaudi14">
-        <img src="images/Aliaa Ahmed.jpeg" width="100" style="border-radius: 50%"><br>
+        <img src="https://avatars.githubusercontent.com/aliaasaudi14" width="100" style="border-radius: 50%"><br>
         <sub><a href="https://www.linkedin.com/in/aliaa-saudi/">Aliaa Ahmed</a></sub>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/JessicaAyman">
-        <img src="images/Jessica Ayman.jpg" width="100" style="border-radius: 50%"><br>
+        <img src="https://avatars.githubusercontent.com/JessicaAyman" width="100" style="border-radius: 50%"><br>
         <sub><a href="https://www.linkedin.com/in/jessica-ayman-naeem/">Jessica Ayman</a></sub>
       </a>
     </td>
