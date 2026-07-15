@@ -236,29 +236,6 @@ Each conversation message displays:
 ```
 
 ---
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| Operational Database | Microsoft SQL Server |
-| Data Loading | Python (Pandas · SQLAlchemy · PyODBC) |
-| ETL Pipeline | SSIS (SQL Server Integration Services) |
-| Data Warehouse | Galaxy Schema (Fact Constellation) on SQL Server |
-| Stored Procedures | T-SQL |
-| BI Dashboards | Power BI · Tableau |
-| AI Provider | Student Bedrock Gateway (multi-model: Anthropic Claude, DeepSeek, Meta Llama, GPT-OSS) |
-| ML Forecasting | Prophet (Meta) · Pandas |
-| Web Framework | Python Flask |
-| Frontend | HTML5 · CSS3 · JavaScript (Vanilla) · Chart.js |
-| Scheduling | APScheduler |
-| Report Generation | ReportLab (PDF) |
-| Email Delivery | Gmail SMTP · Python smtplib |
-| Version Control | GitHub |
-
----
----
-
 ## Artificial Intelligence
 
 ### AI Business Advisor
@@ -369,18 +346,24 @@ Sends the formatted alert message to the designated Telegram channel, notifying 
 ---
  
 ## Tech Stack
- 
-| Metric | Result |
-|--------|--------|
-| OLTP Tables | 16 fully normalized tables |
-| DWH Tables | 12 (8 Dim + 4 Fact) |
-| ETL Pipeline | SSIS with CDC incremental loading |
-| BI Dashboards | Power BI + Tableau (multi-layer) |
-| AI Response Time | < 5 seconds per business question |
-| Forecasting Horizon | Up to 12 months with confidence intervals |
-| Report Automation | Monthly executive report — zero manual effort |
-| Languages Supported | English + Arabic (bilingual AI + UI) |
- 
+
+| Layer | Technology |
+|-------|-----------|
+| Operational Database | Microsoft SQL Server |
+| Data Loading | Python (Pandas · SQLAlchemy · PyODBC) |
+| ETL Pipeline | SSIS (SQL Server Integration Services) |
+| Data Warehouse | Galaxy Schema (Fact Constellation) on SQL Server |
+| Stored Procedures | T-SQL |
+| BI Dashboards | Power BI · Tableau |
+| AI Provider | Student Bedrock Gateway (multi-model: Anthropic Claude, DeepSeek, Meta Llama, GPT-OSS) |
+| ML Forecasting | Prophet (Meta) · Pandas |
+| Web Framework | Python Flask |
+| Frontend | HTML5 · CSS3 · JavaScript (Vanilla) · Chart.js |
+| Scheduling | APScheduler |
+| Report Generation | ReportLab (PDF) |
+| Email Delivery | Gmail SMTP · Python smtplib |
+| Version Control | GitHub |
+
 ---
  
 *TIJARAH — Trade Smarter · Grow Faster*
