@@ -358,7 +358,7 @@ Sends the formatted alert message to the designated Telegram channel, notifying 
 | AI Provider | Student Bedrock Gateway (multi-model: Anthropic Claude, DeepSeek, Meta Llama, GPT-OSS) |
 | ML Forecasting | Prophet (Meta) · Pandas |
 | Web Framework | Python Flask |
-| Frontend | HTML5 · CSS3 · JavaScript (Vanilla) · Chart.js |
+| Frontend | HTML5 · CSS3 · JavaScript  · Chart.js |
 | Scheduling | APScheduler |
 | Report Generation | ReportLab (PDF) |
 | Email Delivery | Gmail SMTP · Python smtplib |
