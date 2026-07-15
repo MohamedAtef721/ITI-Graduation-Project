@@ -32,9 +32,9 @@ TIJARAH addresses all of these with a unified, automated BI and AI platform.
 ├──────────────┬──────────────┬──────────────┬────────────────────────┤
 │  OPERATIONAL │     ETL      │   STORAGE    │      INTELLIGENCE      │
 │              │              │              │                        │
-│  SQL Server  │  SSIS        │  SQL Server  │  Power BI · Tableau   │
-│  OLTP DB     │  Pipeline    │  DWH         │  AI Advisor · Prophet │
-│  16 Tables   │  CDC         │  Star Schema │  Flask Web Platform   │
+│  SQL Server  │  SSIS        │  SQL Server  │  Power BI · Tableau    │
+│  OLTP DB     │  Pipeline    │  DWH         │  AI Advisor · Prophet  │
+│  16 Tables   │  CDC         │  Star Schema │  Flask Web Platform    │
 └──────────────┴──────────────┴──────────────┴────────────────────────┘
 
 From raw transaction → to business decision — in a single, governed pathway.
